@@ -1,0 +1,173 @@
+erDiagram
+    PERFILES ||--o{ COMPRAS : registra
+    PERFILES ||--o{ EVENTOS : registra
+    PERFILES ||--o{ GASTOS : registra
+    PERFILES ||--o{ INGRESOS : registra
+    PERFILES ||--o{ MOVIMIENTOS_INVENTARIO : ejecuta
+    PERFILES ||--o{ AUDITORIA : genera
+
+    PROVEEDORES ||--o{ PRODUCTOS : "provee (principal)"
+    PROVEEDORES ||--o{ PRODUCTO_PROVEEDORES : ofrece
+    PROVEEDORES ||--o{ COMPRAS : "vende a"
+    PROVEEDORES ||--o{ GASTOS : "asociado a"
+
+    CATEGORIAS_PRODUCTO ||--o{ PRODUCTOS : clasifica
+    CATEGORIAS_PRODUCTO ||--o{ CATEGORIAS_PRODUCTO : "subcategoria de"
+
+    PRODUCTOS ||--o{ PRODUCTO_PROVEEDORES : "tiene proveedores alt."
+    PRODUCTOS ||--o{ PRODUCTO_PRECIO_HISTORIAL : historial
+    PRODUCTOS ||--o{ COMPRA_ITEMS : "se compra en"
+    PRODUCTOS ||--o{ MOVIMIENTOS_INVENTARIO : afecta
+    PRODUCTOS ||--o{ EVENTO_CONSUMOS : "se consume en"
+    PRODUCTOS ||--o{ ALERTAS : origina
+
+    COMPRAS ||--|{ COMPRA_ITEMS : contiene
+    COMPRA_ITEMS }o--|| PRODUCTOS : referencia
+
+    EVENTOS ||--o{ EVENTO_CONSUMOS : consume
+    EVENTOS ||--o{ INGRESOS : genera
+    EVENTOS ||--o{ ALERTAS : origina
+
+    PERFILES {
+        uuid id PK
+        text nombre_completo
+        enum rol
+        boolean activo
+    }
+
+    PROVEEDORES {
+        uuid id PK
+        text nombre
+        text empresa
+        text telefono
+        text whatsapp
+        text email
+        text ciudad
+        text condiciones_pago
+    }
+
+    CATEGORIAS_PRODUCTO {
+        uuid id PK
+        text nombre
+        uuid categoria_padre_id FK
+    }
+
+    PRODUCTOS {
+        uuid id PK
+        text codigo_interno
+        text codigo_barras
+        text nombre
+        uuid categoria_id FK
+        uuid proveedor_principal_id FK
+        numeric precio_actual
+        numeric stock_actual
+        numeric stock_minimo
+        numeric stock_ideal
+        enum estado
+    }
+
+    PRODUCTO_PROVEEDORES {
+        uuid producto_id FK
+        uuid proveedor_id FK
+        numeric precio_ofrecido
+        boolean es_principal
+    }
+
+    PRODUCTO_PRECIO_HISTORIAL {
+        uuid id PK
+        uuid producto_id FK
+        numeric precio_anterior
+        numeric precio_nuevo
+        numeric variacion_porcentual
+        timestamp fecha
+    }
+
+    COMPRAS {
+        uuid id PK
+        date fecha
+        text numero_factura
+        uuid proveedor_id FK
+        numeric total
+        enum estado_pago
+        uuid registrado_por FK
+    }
+
+    COMPRA_ITEMS {
+        uuid id PK
+        uuid compra_id FK
+        uuid producto_id FK
+        numeric cantidad
+        numeric precio_unitario
+        numeric subtotal
+    }
+
+    MOVIMIENTOS_INVENTARIO {
+        uuid id PK
+        uuid producto_id FK
+        enum tipo
+        numeric cantidad
+        numeric stock_resultante
+        text referencia_tabla
+        uuid referencia_id
+        uuid usuario_id FK
+    }
+
+    EVENTOS {
+        uuid id PK
+        text cliente_nombre
+        date fecha
+        time hora
+        int cantidad_ninos
+        int cantidad_adultos
+        text tematica
+        enum estado_pago
+        numeric total_cobrado
+        uuid registrado_por FK
+    }
+
+    EVENTO_CONSUMOS {
+        uuid id PK
+        uuid evento_id FK
+        uuid producto_id FK
+        numeric cantidad
+    }
+
+    GASTOS {
+        uuid id PK
+        date fecha
+        enum categoria
+        uuid proveedor_id FK
+        text concepto
+        numeric importe
+        enum medio_pago
+    }
+
+    INGRESOS {
+        uuid id PK
+        uuid evento_id FK
+        enum tipo
+        date fecha
+        numeric importe
+        enum medio_pago
+    }
+
+    ALERTAS {
+        uuid id PK
+        enum tipo
+        enum severidad
+        text titulo
+        uuid producto_id FK
+        uuid proveedor_id FK
+        uuid evento_id FK
+        boolean resuelta
+    }
+
+    AUDITORIA {
+        uuid id PK
+        uuid usuario_id FK
+        text accion
+        text tabla
+        uuid registro_id
+        jsonb valores_anteriores
+        jsonb valores_nuevos
+    }
