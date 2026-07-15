@@ -36,8 +36,8 @@ export class IngresosRepository {
     return { data, count: count ?? 0 };
   }
 
-  async crear(ingreso: Ingresos["Insert"]) {
-    const { data, error } = await this.supabase.from("ingresos").insert(ingreso).select().single();
+  async crear(ingreso: Ingresos["Insert"]): Promise<Ingresos["Row"] | null> {
+    const { data, error } = await this.supabase.from("ingresos").insert(ingreso).select().maybeSingle();
     if (error) throw error;
     return data;
   }

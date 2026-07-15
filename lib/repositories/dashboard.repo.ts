@@ -10,65 +10,65 @@ import type { Database } from "@/lib/supabase/types";
 export class DashboardRepository {
   constructor(private supabase: SupabaseClient<Database>) {}
 
-  async indicadoresMesActual() {
-    const { data, error } = await this.supabase.from("vw_dashboard_mes_actual").select("*").single();
+  async indicadoresMesActual(): Promise<any | null> {
+    const { data, error } = await this.supabase.from("vw_dashboard_mes_actual").select("*").maybeSingle();
     if (error) throw error;
-    return data;
+    return data ?? null;
   }
 
-  async evolucionMensual() {
+  async evolucionMensual(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_evolucion_mensual").select("*");
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async gastosPorCategoriaMesActual() {
+  async gastosPorCategoriaMesActual(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_gastos_categoria_mes_actual").select("*");
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async productosMasUtilizados() {
+  async productosMasUtilizados(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_productos_mas_utilizados").select("*");
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async proveedoresMayorVolumen() {
+  async proveedoresMayorVolumen(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_proveedores_mayor_volumen").select("*");
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async comprasSugeridas() {
+  async comprasSugeridas(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_compras_sugeridas").select("*").limit(8);
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async valorInventario() {
-    const { data, error } = await this.supabase.from("vw_valor_inventario").select("*").single();
+  async valorInventario(): Promise<any | null> {
+    const { data, error } = await this.supabase.from("vw_valor_inventario").select("*").maybeSingle();
     if (error) throw error;
-    return data;
+    return data ?? null;
   }
 
-  async ultimosMovimientos(limite = 8) {
+  async ultimosMovimientos(limite = 8): Promise<any[]> {
     const { data, error } = await this.supabase
       .from("movimientos_inventario")
       .select("*, productos(nombre)")
       .order("created_at", { ascending: false })
       .limit(limite);
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async comprasRecientes(limite = 5) {
+  async comprasRecientes(limite = 5): Promise<any[]> {
     const { data, error } = await this.supabase
       .from("compras")
       .select("id, fecha, total, estado_pago, proveedores(nombre)")
       .order("fecha", { ascending: false })
       .limit(limite);
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 }

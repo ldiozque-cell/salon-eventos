@@ -7,7 +7,7 @@ import type { Database } from "./types";
  * con el servidor (ver server.ts y middleware.ts).
  */
 export function createClient() {
-  return createBrowserClient<Database>(
+  return createBrowserClient<any>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );

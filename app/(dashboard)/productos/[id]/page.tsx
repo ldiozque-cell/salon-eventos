@@ -24,6 +24,9 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
     service.historialMovimientos(params.id),
   ]);
 
+  const historialPreciosList = (historialPrecios ?? []) as Array<any>;
+  const historialMovimientosList = (historialMovimientos ?? []) as Array<any>;
+
   if (!producto) notFound();
 
   const stockBajo = producto.stock_actual <= producto.stock_minimo;
@@ -74,7 +77,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
       <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
         <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">Historial de precios</h2>
         <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-          {historialPrecios?.map((h) => (
+          {historialPreciosList.map((h) => (
             <li key={h.id} className="flex items-center justify-between py-2 text-sm">
               <span className="text-slate-500">{new Date(h.fecha).toLocaleDateString("es-AR")}</span>
               <span>
@@ -86,7 +89,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
               </span>
             </li>
           ))}
-          {(!historialPrecios || historialPrecios.length === 0) && (
+          {historialPreciosList.length === 0 && (
             <li className="py-4 text-center text-sm text-slate-400">Sin cambios de precio registrados.</li>
           )}
         </ul>
@@ -98,7 +101,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
           Últimos movimientos de stock
         </h2>
         <ul className="divide-y divide-slate-100 dark:divide-slate-800">
-          {historialMovimientos?.map((m) => (
+          {historialMovimientosList.map((m) => (
             <li key={m.id} className="flex items-center justify-between py-2 text-sm">
               <span className="text-slate-500">{new Date(m.created_at).toLocaleString("es-AR")}</span>
               <span className="text-slate-600 dark:text-slate-300">{ETIQUETA_MOVIMIENTO[m.tipo] ?? m.tipo}</span>
@@ -108,7 +111,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
               </span>
             </li>
           ))}
-          {(!historialMovimientos || historialMovimientos.length === 0) && (
+          {historialMovimientosList.length === 0 && (
             <li className="py-4 text-center text-sm text-slate-400">Sin movimientos registrados.</li>
           )}
         </ul>

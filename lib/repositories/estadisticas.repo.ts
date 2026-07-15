@@ -4,61 +4,61 @@ import type { Database } from "@/lib/supabase/types";
 export class EstadisticasRepository {
   constructor(private supabase: SupabaseClient<Database>) {}
 
-  async valorInventario() {
-    const { data, error } = await this.supabase.from("vw_valor_inventario").select("*").single();
+  async valorInventario(): Promise<any | null> {
+    const { data, error } = await this.supabase.from("vw_valor_inventario").select("*").maybeSingle();
     if (error) throw error;
-    return data;
+    return data ?? null;
   }
 
-  async productosMayorAumento() {
+  async productosMayorAumento(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_productos_mayor_aumento").select("*");
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async productosMenosUtilizados() {
+  async productosMenosUtilizados(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_productos_menos_utilizados").select("*");
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async productosSinMovimiento() {
+  async productosSinMovimiento(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_productos_sin_movimiento").select("*");
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async capitalInmovilizado() {
+  async capitalInmovilizado(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_capital_inmovilizado").select("*").limit(15);
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async pronosticoReposicion() {
+  async pronosticoReposicion(): Promise<any[]> {
     const { data, error } = await this.supabase.from("vw_pronostico_reposicion").select("*").limit(15);
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async proyeccionGastos() {
-    const { data, error } = await this.supabase.from("vw_proyeccion_gastos").select("*").single();
+  async proyeccionGastos(): Promise<any | null> {
+    const { data, error } = await this.supabase.from("vw_proyeccion_gastos").select("*").maybeSingle();
     if (error) throw error;
-    return data;
+    return data ?? null;
   }
 
-  async proyeccionCompras() {
-    const { data, error } = await this.supabase.from("vw_proyeccion_compras").select("*").single();
+  async proyeccionCompras(): Promise<any | null> {
+    const { data, error } = await this.supabase.from("vw_proyeccion_compras").select("*").maybeSingle();
     if (error) throw error;
-    return data;
+    return data ?? null;
   }
 
-  async costoPromedioEvento() {
+  async costoPromedioEvento(): Promise<any[]> {
     const { data, error } = await this.supabase
       .from("vw_costo_promedio_evento")
       .select("*")
       .order("fecha", { ascending: false })
       .limit(20);
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 }

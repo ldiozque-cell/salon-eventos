@@ -34,8 +34,8 @@ export class GastosRepository {
     return { data, count: count ?? 0 };
   }
 
-  async crear(gasto: Gastos["Insert"]) {
-    const { data, error } = await this.supabase.from("gastos").insert(gasto).select().single();
+  async crear(gasto: Gastos["Insert"]): Promise<Gastos["Row"] | null> {
+    const { data, error } = await this.supabase.from("gastos").insert(gasto).select().maybeSingle();
     if (error) throw error;
     return data;
   }

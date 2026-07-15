@@ -14,9 +14,9 @@ export class GastosService {
     return this.repo.listar(filtros);
   }
 
-  async crear(input: unknown, registradoPor: string | null) {
+  async crear(input: unknown, registradoPor: string | null): Promise<{ id: string } | null> {
     const datos = gastoSchema.parse(input);
-    return this.repo.crear({
+    const gasto = await this.repo.crear({
       fecha: datos.fecha,
       categoria: datos.categoria,
       proveedor_id: datos.proveedor_id || null,
@@ -26,6 +26,7 @@ export class GastosService {
       observaciones: datos.observaciones ?? null,
       registrado_por: registradoPor,
     });
+    return gasto ? { id: gasto.id } : null;
   }
 
   async totalPeriodo(desde: string, hasta: string) {

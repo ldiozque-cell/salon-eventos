@@ -14,9 +14,9 @@ export class IngresosService {
     return this.repo.listar(filtros);
   }
 
-  async crear(input: unknown, registradoPor: string | null) {
+  async crear(input: unknown, registradoPor: string | null): Promise<{ id: string } | null> {
     const datos = ingresoSchema.parse(input);
-    return this.repo.crear({
+    const ingreso = await this.repo.crear({
       evento_id: datos.evento_id || null,
       tipo: datos.tipo,
       fecha: datos.fecha,
@@ -25,6 +25,7 @@ export class IngresosService {
       observaciones: datos.observaciones ?? null,
       registrado_por: registradoPor,
     });
+    return ingreso ? { id: ingreso.id } : null;
   }
 
   async totalPeriodo(desde: string, hasta: string) {

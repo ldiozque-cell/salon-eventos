@@ -10,7 +10,7 @@ export interface FiltrosAlertas {
 export class AlertasRepository {
   constructor(private supabase: SupabaseClient<Database>) {}
 
-  async listar(filtros: FiltrosAlertas = {}) {
+  async listar(filtros: FiltrosAlertas = {}): Promise<any[]> {
     const { severidad, tipo, soloNoResueltas = true } = filtros;
 
     let query = this.supabase
@@ -25,10 +25,10 @@ export class AlertasRepository {
 
     const { data, error } = await query;
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 
-  async contarNoLeidas() {
+  async contarNoLeidas(): Promise<number> {
     const { count, error } = await this.supabase
       .from("alertas")
       .select("*", { count: "exact", head: true })
@@ -38,12 +38,12 @@ export class AlertasRepository {
     return count ?? 0;
   }
 
-  async marcarLeida(id: string) {
+  async marcarLeida(id: string): Promise<void> {
     const { error } = await this.supabase.from("alertas").update({ leida: true }).eq("id", id);
     if (error) throw error;
   }
 
-  async marcarResuelta(id: string) {
+  async marcarResuelta(id: string): Promise<void> {
     const { error } = await this.supabase.from("alertas").update({ resuelta: true, leida: true }).eq("id", id);
     if (error) throw error;
   }
@@ -54,7 +54,7 @@ export class AlertasRepository {
    * porque es una condición que depende del paso del tiempo, no de un
    * evento discreto — se recalcula en cada carga de la página.
    */
-  async eventosConSaldoPendienteProximos() {
+  async eventosConSaldoPendienteProximos(): Promise<any[]> {
     const limite = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
     const { data, error } = await this.supabase
       .from("eventos")
@@ -63,6 +63,6 @@ export class AlertasRepository {
       .lte("fecha", limite)
       .order("fecha", { ascending: true });
     if (error) throw error;
-    return data;
+    return (data as any[]) ?? [];
   }
 }

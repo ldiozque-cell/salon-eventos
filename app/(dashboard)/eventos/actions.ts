@@ -48,7 +48,7 @@ export async function crearEventoAction(formData: FormData): Promise<ActionResul
     revalidatePath("/eventos");
     revalidatePath("/productos");
     revalidatePath("/dashboard");
-    return { ok: true, data: { id: evento.id } };
+    return { ok: true, data: { id: evento?.id ?? "" } };
   } catch (error) {
     return manejarError(error);
   }

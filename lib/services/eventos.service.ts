@@ -34,7 +34,7 @@ export class EventosService {
    * agrega descontando stock (Módulo 7: el descuento es automático vía
    * trigger, este método solo orquesta el orden de inserción).
    */
-  async crear(input: unknown, registradoPor: string | null) {
+  async crear(input: unknown, registradoPor: string | null): Promise<{ id: string } | null> {
     const datos = eventoSchema.parse(input);
 
     const evento = await this.repo.crear({
@@ -65,12 +65,13 @@ export class EventosService {
       }
     }
 
-    return evento;
+    return evento ? { id: evento.id } : null;
   }
 
-  async actualizar(id: string, input: unknown) {
+  async actualizar(id: string, input: unknown): Promise<{ id: string } | null> {
     const datos = eventoUpdateSchema.parse(input);
-    return this.repo.actualizar(id, datos);
+    const evento = await this.repo.actualizar(id, datos);
+    return evento ? { id: evento.id } : null;
   }
 
   /** Agregar consumo a un evento ya existente (ej: el día del evento) */

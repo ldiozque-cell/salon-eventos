@@ -1,3 +1,5 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
+
 /**
  * Este archivo se genera normalmente con:
  *   npm run supabase:types

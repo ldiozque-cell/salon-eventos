@@ -29,7 +29,8 @@ export default async function IngresosPage({
       .limit(100),
   ]);
 
-  const totalListado = ingresos?.reduce((acc, i) => acc + i.importe, 0) ?? 0;
+  const ingresosList = (ingresos ?? []) as Array<any>;
+  const totalListado = ingresosList.reduce((acc, i) => acc + (Number(i.importe) || 0), 0);
 
   return (
     <div className="space-y-6">

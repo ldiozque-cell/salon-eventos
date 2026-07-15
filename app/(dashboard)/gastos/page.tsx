@@ -29,7 +29,8 @@ export default async function GastosPage({
     supabase.from("proveedores").select("id, nombre").eq("activo", true).order("nombre"),
   ]);
 
-  const totalListado = gastos?.reduce((acc, g) => acc + g.importe, 0) ?? 0;
+  const gastosList = (gastos ?? []) as Array<any>;
+  const totalListado = gastosList.reduce((acc, g) => acc + (Number(g.importe) || 0), 0);
 
   return (
     <div className="space-y-6">

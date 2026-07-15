@@ -507,7 +507,7 @@ select
 from compra_items ci
 join compras c on c.id = ci.compra_id
 cross join lateral (
-  select extract(day from c.fecha - lag(c.fecha) over (partition by ci.producto_id order by c.fecha))::numeric as dias_entre_compras
+  select (c.fecha - lag(c.fecha) over (partition by ci.producto_id order by c.fecha))::int as dias_entre_compras
 ) sub
 group by ci.producto_id;
 

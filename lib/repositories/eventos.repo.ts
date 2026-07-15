@@ -45,13 +45,13 @@ export class EventosRepository {
     return data;
   }
 
-  async crear(evento: Eventos["Insert"]) {
-    const { data, error } = await this.supabase.from("eventos").insert(evento).select().single();
+  async crear(evento: Eventos["Insert"]): Promise<Events["Row"] | null> {
+    const { data, error } = await this.supabase.from("eventos").insert(evento).select().maybeSingle();
     if (error) throw error;
     return data;
   }
 
-  async actualizar(id: string, cambios: Eventos["Update"]) {
+  async actualizar(id: string, cambios: Eventos["Update"]): Promise<Events["Row"] | null> {
     const { data, error } = await this.supabase
       .from("eventos")
       .update(cambios)

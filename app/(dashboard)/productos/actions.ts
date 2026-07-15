@@ -7,7 +7,7 @@ import { ProductosService, ProductoDuplicadoError } from "@/lib/services/product
 
 export type ActionResult<T = void> =
   | { ok: true; data: T }
-  | { ok: false; error: string; fieldErrors?: Record<string, string[]> };
+  | { ok: false; error: string; fieldErrors?: Record<string, string[] | undefined> };
 
 function manejarError(error: unknown): ActionResult<never> {
   if (error instanceof ZodError) {
@@ -33,7 +33,7 @@ export async function crearProductoAction(formData: FormData): Promise<ActionRes
     const producto = await service.crear(input);
 
     revalidatePath("/productos");
-    return { ok: true, data: { id: producto.id } };
+    return { ok: true, data: { id: producto?.id ?? "" } };
   } catch (error) {
     return manejarError(error);
   }
@@ -56,7 +56,7 @@ export async function actualizarProductoAction(
 
     revalidatePath("/productos");
     revalidatePath(`/productos/${id}`);
-    return { ok: true, data: { id: producto.id } };
+    return { ok: true, data: { id: producto?.id ?? id } };
   } catch (error) {
     return manejarError(error);
   }

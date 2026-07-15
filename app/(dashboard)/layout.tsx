@@ -27,13 +27,15 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   if (!user) redirect("/login");
 
-  const { data: perfil } = await supabase
+  const { data: perfil, error: perfilError } = await supabase
     .from("perfiles")
     .select("nombre_completo, rol")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   const esAdmin = perfil?.rol === "admin";
+  const nombrePerfil = perfilError ? user.email : perfil?.nombre_completo ?? user.email;
+  const rolPerfil = perfilError ? "empleado" : perfil?.rol ?? "empleado";
   const itemsVisibles = NAV_ITEMS.filter((item) => !item.soloAdmin || esAdmin);
 
   const alertasService = new AlertasService(supabase);
@@ -73,9 +75,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <div className="flex items-center gap-3">
             <div className="text-right text-sm">
               <div className="font-medium text-slate-900 dark:text-white">
-                {perfil?.nombre_completo ?? user.email}
+                {nombrePerfil}
               </div>
-              <div className="text-xs capitalize text-slate-500">{perfil?.rol ?? "empleado"}</div>
+              <div className="text-xs capitalize text-slate-500">{rolPerfil}</div>
             </div>
             <form action={logoutAction}>
               <button

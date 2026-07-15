@@ -25,11 +25,13 @@ export default async function EventosPage({
   const service = new EventosService(supabase);
 
   const page = Number(searchParams.page ?? "1");
-  const { data: eventos, count } = await service.listar({
+  const resultado = await service.listar({
     estadoPago: searchParams.estado as any,
     page,
     pageSize: 25,
   });
+  const eventos = (resultado?.data ?? []) as Array<any>;
+  const count = resultado?.count ?? 0;
 
   return (
     <div>

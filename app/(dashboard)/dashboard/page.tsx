@@ -24,8 +24,12 @@ export default async function DashboardPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data: perfil } = await supabase.from("perfiles").select("rol").eq("id", user!.id).single();
-  const esAdmin = perfil?.rol === "admin";
+  const { data: perfil, error: perfilError } = await supabase
+    .from("perfiles")
+    .select("rol")
+    .eq("id", user?.id)
+    .maybeSingle();
+  const esAdmin = perfil?.rol === "admin" || perfilError === null && perfil?.rol === "admin";
 
   const service = new DashboardService(supabase);
   const resumen = await service.obtenerResumenCompleto();

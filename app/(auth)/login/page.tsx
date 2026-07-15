@@ -13,6 +13,12 @@ export default function LoginPage({
         </h1>
         <p className="mb-6 text-sm text-slate-500">Iniciá sesión para continuar</p>
 
+        {searchParams.error ? (
+          <p className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
+            {searchParams.error}
+          </p>
+        ) : null}
+
         <form action={loginAction} className="space-y-4">
           <input type="hidden" name="redirectTo" value={searchParams.redirectTo ?? "/dashboard"} />
 
