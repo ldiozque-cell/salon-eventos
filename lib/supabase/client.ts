@@ -1,4 +1,5 @@
 import { createBrowserClient } from "@supabase/ssr";
+import { getSupabaseAnonKey, getSupabaseUrl } from "./config";
 import type { Database } from "./types";
 
 /**
@@ -7,8 +8,5 @@ import type { Database } from "./types";
  * con el servidor (ver server.ts y middleware.ts).
  */
 export function createClient() {
-  return createBrowserClient<any>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  return createBrowserClient<any>(getSupabaseUrl(), getSupabaseAnonKey());
 }
