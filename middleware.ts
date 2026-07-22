@@ -13,12 +13,17 @@ const RUTAS_SOLO_ADMIN = [
 const RUTAS_PUBLICAS = ["/login"];
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({ request: { headers: request.headers } });
+  const response = NextResponse.next({ request: { headers: request.headers } });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseAnonKey) {
+      return response;
+    }
+
+    const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
       cookies: {
         get(name: string) {
           return request.cookies.get(name)?.value;
@@ -30,48 +35,60 @@ export async function middleware(request: NextRequest) {
           response.cookies.set({ name, value: "", ...options });
         },
       },
+    });
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError) {
+      console.warn("[middleware] getUser error:", userError.message);
     }
-  );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    const path = request.nextUrl.pathname;
+    const esRutaPublica = RUTAS_PUBLICAS.some((r) => path.startsWith(r));
 
-  const path = request.nextUrl.pathname;
-  const esRutaPublica = RUTAS_PUBLICAS.some((r) => path.startsWith(r));
-
-  // No autenticado intentando entrar a una ruta privada -> a login
-  if (!user && !esRutaPublica) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("redirectTo", path);
-    return NextResponse.redirect(url);
-  }
-
-  // Autenticado intentando ir a /login -> al dashboard
-  if (user && esRutaPublica) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
-    return NextResponse.redirect(url);
-  }
-
-  // Verificación de rol para rutas exclusivas de admin
-  if (user && RUTAS_SOLO_ADMIN.some((r) => path.startsWith(r))) {
-    const { data: perfil } = await supabase
-      .from("perfiles")
-      .select("rol")
-      .eq("id", user.id)
-      .single();
-
-    if (perfil?.rol !== "admin") {
+    // No autenticado intentando entrar a una ruta privada -> a login
+    if (!user && !esRutaPublica) {
       const url = request.nextUrl.clone();
-      url.pathname = "/dashboard";
-      url.searchParams.set("error", "sin_permiso");
+      url.pathname = "/login";
+      url.searchParams.set("redirectTo", path);
       return NextResponse.redirect(url);
     }
-  }
 
-  return response;
+    // Autenticado intentando ir a /login -> al dashboard
+    if (user && esRutaPublica) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
+
+    // Verificación de rol para rutas exclusivas de admin
+    if (user && RUTAS_SOLO_ADMIN.some((r) => path.startsWith(r))) {
+      const { data: perfil, error: perfilError } = await supabase
+        .from("perfiles")
+        .select("rol")
+        .eq("id", user.id)
+        .maybeSingle();
+
+      if (perfilError) {
+        console.warn("[middleware] perfil error:", perfilError.message);
+      }
+
+      if (perfil?.rol !== "admin") {
+        const url = request.nextUrl.clone();
+        url.pathname = "/dashboard";
+        url.searchParams.set("error", "sin_permiso");
+        return NextResponse.redirect(url);
+      }
+    }
+
+    return response;
+  } catch (error) {
+    console.error("[middleware] Invocation failed:", error);
+    return response;
+  }
 }
 
 export const config = {
