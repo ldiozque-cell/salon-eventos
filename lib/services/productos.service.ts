@@ -29,7 +29,7 @@ export class ProductosService {
     return this.repo.obtenerPorId(id);
   }
 
-  async crear(input: unknown) {
+  async crear(input: unknown): Promise<Pick<Database["public"]["Tables"]["productos"]["Row"], "id"> | null> {
     const datos = productoSchema.parse(input);
 
     const existente = await this.repo.obtenerPorCodigoInterno(datos.codigo_interno);
@@ -40,7 +40,7 @@ export class ProductosService {
     return this.repo.crear(datos);
   }
 
-  async actualizar(id: string, input: unknown) {
+  async actualizar(id: string, input: unknown): Promise<Pick<Database["public"]["Tables"]["productos"]["Row"], "id"> | null> {
     const datos = productoUpdateSchema.parse(input);
 
     if (datos.codigo_interno) {

@@ -69,23 +69,23 @@ export class ProductosRepository {
     return data;
   }
 
-  async crear(producto: Productos["Insert"]) {
+  async crear(producto: Productos["Insert"]): Promise<Pick<Productos["Row"], "id"> | null> {
     const { data, error } = await this.supabase
       .from("productos")
       .insert(producto)
-      .select()
-      .single();
+      .select("id")
+      .maybeSingle();
     if (error) throw error;
     return data;
   }
 
-  async actualizar(id: string, cambios: Productos["Update"]) {
+  async actualizar(id: string, cambios: Productos["Update"]): Promise<Pick<Productos["Row"], "id"> | null> {
     const { data, error } = await this.supabase
       .from("productos")
       .update(cambios)
       .eq("id", id)
-      .select()
-      .single();
+      .select("id")
+      .maybeSingle();
     if (error) throw error;
     return data;
   }
