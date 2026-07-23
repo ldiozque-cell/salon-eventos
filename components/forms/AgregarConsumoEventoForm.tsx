@@ -42,7 +42,7 @@ export function AgregarConsumoEventoForm({ eventoId, productos }: { eventoId: st
       <select
         value={productoId}
         onChange={(e) => setProductoId(e.target.value)}
-        className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+        className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
       >
         <option value="">Producto...</option>
         {productos.map((p) => (
@@ -57,7 +57,7 @@ export function AgregarConsumoEventoForm({ eventoId, productos }: { eventoId: st
         step="0.01"
         value={cantidad}
         onChange={(e) => setCantidad(Number(e.target.value))}
-        className="w-24 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+        className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
       />
       <button
         type="submit"

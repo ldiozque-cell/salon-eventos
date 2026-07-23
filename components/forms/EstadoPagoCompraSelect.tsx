@@ -27,7 +27,7 @@ export function EstadoPagoCompraSelect({ compraId, estadoActual }: { compraId: s
       defaultValue={estadoActual}
       disabled={isPending}
       onChange={(e) => handleChange(e.target.value)}
-      className="rounded-lg border border-slate-300 px-3 py-2 text-sm disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800"
+      className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 disabled:opacity-50 dark:border-slate-700"
     >
       {OPCIONES.map((o) => (
         <option key={o.value} value={o.value}>

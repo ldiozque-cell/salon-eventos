@@ -69,7 +69,7 @@ export function AjusteInventarioForm({ productos }: { productos: Producto[] }) {
           <select
             name="producto_id"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             <option value="">Seleccionar...</option>
             {productos.map((p) => (
@@ -85,7 +85,7 @@ export function AjusteInventarioForm({ productos }: { productos: Producto[] }) {
           <select
             name="tipo"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             {TIPOS_AJUSTE.map((t) => (
               <option key={t.value} value={t.value}>
@@ -103,7 +103,7 @@ export function AjusteInventarioForm({ productos }: { productos: Producto[] }) {
             min="0.01"
             step="0.01"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
 
@@ -114,7 +114,7 @@ export function AjusteInventarioForm({ productos }: { productos: Producto[] }) {
             name="motivo"
             required
             placeholder="Ej: rotura durante traslado"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
 

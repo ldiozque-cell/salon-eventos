@@ -41,7 +41,7 @@ export default async function AlertasPage({
         <select
           name="severidad"
           defaultValue={searchParams.severidad ?? ""}
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
         >
           <option value="">Todas las severidades</option>
           <option value="critica">Crítica</option>
@@ -51,7 +51,7 @@ export default async function AlertasPage({
         <select
           name="tipo"
           defaultValue={searchParams.tipo ?? ""}
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
         >
           <option value="">Todos los tipos</option>
           {Object.entries(ETIQUETA_TIPO).map(([value, label]) => (

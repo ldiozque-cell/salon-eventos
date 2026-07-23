@@ -62,7 +62,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
             type="text"
             name="cliente_nombre"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
         <div>
@@ -70,7 +70,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
           <input
             type="text"
             name="cliente_telefono"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
       </div>
@@ -82,7 +82,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
             type="date"
             name="fecha"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
         <div>
@@ -91,7 +91,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
             type="time"
             name="hora"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
       </div>
@@ -104,7 +104,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
             name="cantidad_ninos"
             min="0"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
         <div>
@@ -114,7 +114,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
             name="cantidad_adultos"
             min="0"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
       </div>
@@ -125,7 +125,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
           <input
             type="text"
             name="tematica"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
         <div>
@@ -133,7 +133,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
           <input
             type="text"
             name="salon"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
       </div>
@@ -147,7 +147,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
             min="0"
             step="0.01"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
         <div>
@@ -155,7 +155,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
           <select
             name="estado_pago"
             defaultValue="pendiente"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             <option value="pendiente">Pendiente</option>
             <option value="parcial">Seña pagada</option>
@@ -186,7 +186,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
               <select
                 value={item.producto_id}
                 onChange={(e) => actualizarConsumo(index, { producto_id: e.target.value })}
-                className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+                className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               >
                 <option value="">Producto...</option>
                 {productos.map((p) => (
@@ -202,7 +202,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
                 value={item.cantidad}
                 onChange={(e) => actualizarConsumo(index, { cantidad: Number(e.target.value) })}
                 placeholder="Cant."
-                className="w-24 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+                className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               />
               <button
                 type="button"

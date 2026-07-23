@@ -64,7 +64,7 @@ export function ProductoForm({ categorias, productoId, valoresIniciales }: Produ
           <select
             name="categoria_id"
             defaultValue={(v.categoria_id as string) ?? ""}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             <option value="">Sin categoría</option>
             {categorias.map((c) => (
@@ -105,7 +105,7 @@ export function ProductoForm({ categorias, productoId, valoresIniciales }: Produ
         <select
           name="estado"
           defaultValue={(v.estado as string) ?? "activo"}
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
         >
           <option value="activo">Activo</option>
           <option value="inactivo">Inactivo</option>
@@ -152,7 +152,7 @@ function Campo({
         step={step}
         defaultValue={defaultValue ?? ""}
         required={required}
-        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
       />
       {errores?.map((e) => (
         <p key={e} className="mt-1 text-xs text-red-600">

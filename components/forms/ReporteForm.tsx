@@ -46,7 +46,7 @@ export function ReporteForm({ esAdmin }: { esAdmin: boolean }) {
           <select
             value={tipo}
             onChange={(e) => setTipo(e.target.value)}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             {opcionesVisibles.map((t) => (
               <option key={t.value} value={t.value}>
@@ -64,7 +64,7 @@ export function ReporteForm({ esAdmin }: { esAdmin: boolean }) {
                 type="date"
                 value={desde}
                 onChange={(e) => setDesde(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               />
             </div>
             <div>
@@ -73,7 +73,7 @@ export function ReporteForm({ esAdmin }: { esAdmin: boolean }) {
                 type="date"
                 value={hasta}
                 onChange={(e) => setHasta(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               />
             </div>
           </div>

@@ -70,7 +70,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
           <select
             name="tipo"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             {TIPOS.map((t) => (
               <option key={t.value} value={t.value}>
@@ -87,7 +87,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
             name="fecha"
             defaultValue={new Date().toISOString().slice(0, 10)}
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
 
@@ -98,7 +98,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
           <select
             name="evento_id"
             defaultValue={eventoPreseleccionado ?? ""}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             <option value="">Sin evento asociado</option>
             {eventos.map((e) => (
@@ -116,7 +116,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
             name="importe"
             step="0.01"
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
           <p className="mt-1 text-xs text-slate-400">Para cancelaciones/reembolsos, cargar en negativo.</p>
         </div>
@@ -125,7 +125,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
           <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Medio de pago</label>
           <select
             name="medio_pago"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             <option value="">Sin especificar</option>
             <option value="efectivo">Efectivo</option>
@@ -142,7 +142,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
           <textarea
             name="observaciones"
             rows={2}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
 

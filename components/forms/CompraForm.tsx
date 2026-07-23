@@ -89,7 +89,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
             name="fecha"
             defaultValue={new Date().toISOString().slice(0, 10)}
             required
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
         <div>
@@ -97,7 +97,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
           <input
             type="text"
             name="numero_factura"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
       </div>
@@ -107,7 +107,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
         <select
           name="proveedor_id"
           required
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
         >
           <option value="">Seleccionar proveedor...</option>
           {proveedores.map((p) => (
@@ -138,7 +138,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
                 value={item.producto_id}
                 onChange={(e) => seleccionarProducto(index, e.target.value)}
                 required
-                className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+                className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               >
                 <option value="">Producto...</option>
                 {productos.map((p) => (
@@ -154,7 +154,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
                 value={item.cantidad}
                 onChange={(e) => actualizarItem(index, { cantidad: Number(e.target.value) })}
                 placeholder="Cant."
-                className="w-24 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+                className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               />
               <input
                 type="number"
@@ -163,7 +163,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
                 value={item.precio_unitario}
                 onChange={(e) => actualizarItem(index, { precio_unitario: Number(e.target.value) })}
                 placeholder="Precio unit."
-                className="w-32 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+                className="w-32 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               />
               <span className="w-24 text-right text-sm text-slate-500">
                 ${(item.cantidad * item.precio_unitario).toFixed(2)}
@@ -190,14 +190,14 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
             min="0"
             step="0.01"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           />
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Forma de pago</label>
           <select
             name="forma_pago"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             <option value="">Sin especificar</option>
             <option value="efectivo">Efectivo</option>
@@ -213,7 +213,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
           <select
             name="estado_pago"
             defaultValue="pendiente"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
           >
             <option value="pendiente">Pendiente</option>
             <option value="parcial">Parcial</option>
@@ -227,7 +227,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
         <textarea
           name="observaciones"
           rows={2}
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
         />
       </div>
 

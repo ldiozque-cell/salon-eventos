@@ -55,7 +55,7 @@ export default async function ComprasPage({
         <select
           name="estado"
           defaultValue={searchParams.estado ?? ""}
-          className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
         >
           <option value="">Todos los estados</option>
           {Object.entries(ETIQUETA_ESTADO).map(([value, label]) => (
