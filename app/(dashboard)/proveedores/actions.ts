@@ -1,30 +1,19 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { ZodError } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { ProveedoresService } from "@/lib/services/proveedores.service";
+import { manejarError, verificarAdmin } from "@/lib/actions-utils";
 import type { ActionResult } from "@/app/(dashboard)/productos/actions";
-
-function manejarError(error: unknown): ActionResult<never> {
-  if (error instanceof ZodError) {
-    return { ok: false, error: "Datos inválidos", fieldErrors: error.flatten().fieldErrors };
-  }
-  console.error(error);
-  return { ok: false, error: "Ocurrió un error inesperado. Intentá de nuevo." };
-}
 
 export async function crearProveedorAction(formData: FormData): Promise<ActionResult<{ id: string }>> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new ProveedoresService(supabase);
     const input = Object.fromEntries(formData.entries());
-    // El checkbox "activo" no viaja en el FormData si está destildado
     const proveedor = await service.crear({ ...input, activo: formData.get("activo") === "on" });
 
     revalidatePath("/proveedores");
@@ -40,10 +29,8 @@ export async function actualizarProveedorAction(
 ): Promise<ActionResult<{ id: string }>> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new ProveedoresService(supabase);
     const input = Object.fromEntries(formData.entries());
@@ -60,10 +47,8 @@ export async function actualizarProveedorAction(
 export async function darDeBajaProveedorAction(id: string): Promise<ActionResult> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new ProveedoresService(supabase);
     await service.darDeBaja(id);

@@ -64,8 +64,15 @@ export class IngresosRepository {
   }
 
   async eliminar(id: string) {
-    const { error } = await this.supabase.from("ingresos").delete().eq("id", id);
+    const { data, error } = await this.supabase
+      .from("ingresos")
+      .delete()
+      .eq("id", id)
+      .select("id");
     if (error) throw error;
+    if (!data || data.length === 0) {
+      throw new Error("No se pudo eliminar el registro. Verifique que tiene permisos para realizar esta operación.");
+    }
   }
 
   async totalPeriodo(desde: string, hasta: string) {

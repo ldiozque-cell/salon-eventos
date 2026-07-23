@@ -1,29 +1,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { ZodError } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { InventarioService, StockInsuficienteAjusteError } from "@/lib/services/inventario.service";
+import { manejarError, verificarAdmin } from "@/lib/actions-utils";
 import type { ActionResult } from "@/app/(dashboard)/productos/actions";
-
-function manejarError(error: unknown): ActionResult<never> {
-  if (error instanceof ZodError) {
-    return { ok: false, error: "Datos inválidos", fieldErrors: error.flatten().fieldErrors };
-  }
-  if (error instanceof StockInsuficienteAjusteError) {
-    return { ok: false, error: error.message };
-  }
-  console.error(error);
-  return { ok: false, error: "Ocurrió un error al registrar el ajuste. Intentá de nuevo." };
-}
 
 export async function registrarAjusteInventarioAction(formData: FormData): Promise<ActionResult> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new InventarioService(supabase);
     const input = Object.fromEntries(formData.entries());
@@ -34,6 +21,9 @@ export async function registrarAjusteInventarioAction(formData: FormData): Promi
     revalidatePath("/dashboard");
     return { ok: true, data: undefined };
   } catch (error) {
+    if (error instanceof StockInsuficienteAjusteError) {
+      return { ok: false, error: error.message };
+    }
     return manejarError(error);
   }
 }

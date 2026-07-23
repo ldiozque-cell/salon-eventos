@@ -68,7 +68,11 @@ export class ProveedoresRepository {
   }
 
   async darDeBaja(id: string) {
-    return this.actualizar(id, { activo: false });
+    const resultado = await this.actualizar(id, { activo: false });
+    if (!resultado) {
+      throw new Error("No se pudo desactivar el proveedor. Verifique que tiene permisos para realizar esta operación.");
+    }
+    return resultado;
   }
 
   /** Productos asociados a un proveedor (principal o alternativo) */

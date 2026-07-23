@@ -2,13 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 import { ProductosRepository, type FiltrosProductos } from "@/lib/repositories/productos.repo";
 import { productoSchema, productoUpdateSchema } from "@/lib/validators/productos.schema";
-
-export class ProductoDuplicadoError extends Error {
-  constructor(codigo: string) {
-    super(`Ya existe un producto con el código interno "${codigo}"`);
-    this.name = "ProductoDuplicadoError";
-  }
-}
+import { ProductoDuplicadoError } from "@/lib/actions-utils";
 
 /**
  * Capa de servicio: valida input, aplica reglas de negocio y orquesta

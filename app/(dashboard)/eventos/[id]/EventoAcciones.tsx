@@ -37,7 +37,7 @@ export function EventoAcciones({ eventoId, valoresIniciales }: EventoAccionesPro
   const confirmarEliminar = useCallback(() => {
     startTransition(async () => {
       const resultado = await eliminarEventoAction(eventoId);
-      if (!resultado.ok) {
+      if (resultado.ok === false) {
         showToast("error", resultado.error);
         setShowConfirm(false);
         return;

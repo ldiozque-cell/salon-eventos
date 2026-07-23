@@ -40,7 +40,7 @@ export function IngresosAcciones({ ingresoId, ingreso, eventos }: IngresosAccion
   const confirmarEliminar = useCallback(() => {
     startTransition(async () => {
       const resultado = await eliminarIngresoAction(ingresoId);
-      if (!resultado.ok) {
+      if (resultado.ok === false) {
         showToast("error", resultado.error);
         setShowConfirm(false);
         return;

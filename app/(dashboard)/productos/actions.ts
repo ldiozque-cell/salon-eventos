@@ -1,32 +1,19 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { ZodError } from "zod";
 import { createClient } from "@/lib/supabase/server";
-import { ProductosService, ProductoDuplicadoError } from "@/lib/services/productos.service";
+import { ProductosService } from "@/lib/services/productos.service";
+import { manejarError, verificarAdmin } from "@/lib/actions-utils";
 
 export type ActionResult<T = void> =
   | { ok: true; data: T }
   | { ok: false; error: string; fieldErrors?: Record<string, string[] | undefined> };
 
-function manejarError(error: unknown): ActionResult<never> {
-  if (error instanceof ZodError) {
-    return { ok: false, error: "Datos inválidos", fieldErrors: error.flatten().fieldErrors };
-  }
-  if (error instanceof ProductoDuplicadoError) {
-    return { ok: false, error: error.message };
-  }
-  console.error(error);
-  return { ok: false, error: "Ocurrió un error inesperado. Intentá de nuevo." };
-}
-
 export async function crearProductoAction(formData: FormData): Promise<ActionResult<{ id: string }>> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new ProductosService(supabase);
     const input = Object.fromEntries(formData.entries());
@@ -45,10 +32,8 @@ export async function actualizarProductoAction(
 ): Promise<ActionResult<{ id: string }>> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new ProductosService(supabase);
     const input = Object.fromEntries(formData.entries());
@@ -65,10 +50,8 @@ export async function actualizarProductoAction(
 export async function darDeBajaProductoAction(id: string): Promise<ActionResult> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new ProductosService(supabase);
     await service.darDeBaja(id);

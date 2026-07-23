@@ -92,7 +92,11 @@ export class ProductosRepository {
 
   /** Baja lógica: nunca se borra un producto con movimientos asociados */
   async darDeBaja(id: string) {
-    return this.actualizar(id, { estado: "inactivo" });
+    const resultado = await this.actualizar(id, { estado: "inactivo" });
+    if (!resultado) {
+      throw new Error("No se pudo desactivar el producto. Verifique que tiene permisos para realizar esta operación.");
+    }
+    return resultado;
   }
 
   async historialPrecios(productoId: string) {

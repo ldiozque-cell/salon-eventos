@@ -3,15 +3,14 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { AlertasService } from "@/lib/services/alertas.service";
+import { manejarError, verificarAdmin } from "@/lib/actions-utils";
 import type { ActionResult } from "@/app/(dashboard)/productos/actions";
 
 export async function marcarAlertaLeidaAction(id: string): Promise<ActionResult> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new AlertasService(supabase);
     await service.marcarLeida(id);
@@ -19,18 +18,15 @@ export async function marcarAlertaLeidaAction(id: string): Promise<ActionResult>
     revalidatePath("/alertas");
     return { ok: true, data: undefined };
   } catch (error) {
-    console.error(error);
-    return { ok: false, error: "No se pudo actualizar la alerta" };
+    return manejarError(error);
   }
 }
 
 export async function marcarAlertaResueltaAction(id: string): Promise<ActionResult> {
   try {
     const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return { ok: false, error: "No autenticado" };
+    const auth = await verificarAdmin(supabase);
+    if (!auth.ok) return { ok: false, error: auth.error! };
 
     const service = new AlertasService(supabase);
     await service.marcarResuelta(id);
@@ -39,7 +35,6 @@ export async function marcarAlertaResueltaAction(id: string): Promise<ActionResu
     revalidatePath("/dashboard");
     return { ok: true, data: undefined };
   } catch (error) {
-    console.error(error);
-    return { ok: false, error: "No se pudo resolver la alerta" };
+    return manejarError(error);
   }
 }

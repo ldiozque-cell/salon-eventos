@@ -40,7 +40,7 @@ export function GastosAcciones({ gastoId, gasto, proveedores }: GastosAccionesPr
   const confirmarEliminar = useCallback(() => {
     startTransition(async () => {
       const resultado = await eliminarGastoAction(gastoId);
-      if (!resultado.ok) {
+      if (resultado.ok === false) {
         showToast("error", resultado.error);
         setShowConfirm(false);
         return;

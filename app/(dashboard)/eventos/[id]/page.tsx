@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import { EventosService } from "@/lib/services/eventos.service";
 import { AgregarConsumoEventoForm } from "@/components/forms/AgregarConsumoEventoForm";
 import { EventoAcciones } from "./EventoAcciones";
-import { EventoEditForm } from "@/components/forms/EventoEditForm";
 
 const ETIQUETA_ESTADO: Record<string, string> = {
   pendiente: "Pendiente",
@@ -47,7 +46,21 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
             {evento.fecha} · {evento.hora.slice(0, 5)} hs · {evento.tematica ?? "sin temática"}
           </p>
         </div>
-        <EventoAcciones eventoId={evento.id} />
+        <EventoAcciones
+          eventoId={evento.id}
+          valoresIniciales={{
+            cliente_nombre: evento.cliente_nombre,
+            cliente_telefono: evento.cliente_telefono,
+            fecha: evento.fecha,
+            hora: evento.hora,
+            cantidad_ninos: evento.cantidad_ninos,
+            cantidad_adultos: evento.cantidad_adultos,
+            tematica: evento.tematica,
+            salon: evento.salon,
+            estado_pago: evento.estado_pago,
+            total_cobrado: evento.total_cobrado,
+          }}
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -63,26 +76,6 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
           <Dato label="Costo de insumos" valor={`$${costoInsumos.toFixed(2)}`} />
           <Dato label="Margen" valor={`$${margen.toFixed(2)}`} destacado={margen >= 0 ? "positivo" : "negativo"} />
         </div>
-      </div>
-
-      {/* Formulario de edición */}
-      <div className="card p-5">
-        <h2 className="mb-4 text-sm font-semibold text-slate-700">Editar datos del evento</h2>
-        <EventoEditForm
-          eventoId={evento.id}
-          valoresIniciales={{
-            cliente_nombre: evento.cliente_nombre,
-            cliente_telefono: evento.cliente_telefono,
-            fecha: evento.fecha,
-            hora: evento.hora,
-            cantidad_ninos: evento.cantidad_ninos,
-            cantidad_adultos: evento.cantidad_adultos,
-            tematica: evento.tematica,
-            salon: evento.salon,
-            estado_pago: evento.estado_pago,
-            total_cobrado: evento.total_cobrado,
-          }}
-        />
       </div>
 
       {/* Consumo de productos */}
@@ -156,7 +149,7 @@ function Dato({
     <div>
       <p className="text-xs font-medium text-slate-500">{label}</p>
       {badge ? (
-        <span className={`mt-1 inline-block ${COLOR_ESTADO[valor] ? "" : ""}`}>
+        <span className={`mt-1 inline-block ${COLOR_ESTADO[valor] ?? "badge"}`}>
           {valor}
         </span>
       ) : (
