@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { crearProveedorAction, actualizarProveedorAction } from "@/app/(dashboard)/proveedores/actions";
 
 interface ProveedorFormProps {
-  proveedorId?: string; // presente => modo edición
+  proveedorId?: string;
   valoresIniciales?: Record<string, string | boolean | null>;
 }
 
@@ -40,7 +40,7 @@ export function ProveedorForm({ proveedorId, valoresIniciales }: ProveedorFormPr
   return (
     <form action={handleSubmit} className="max-w-2xl space-y-5">
       {error && (
-        <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-400">
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
@@ -79,7 +79,7 @@ export function ProveedorForm({ proveedorId, valoresIniciales }: ProveedorFormPr
       />
 
       <div>
-        <label htmlFor="observaciones" className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+        <label htmlFor="observaciones" className="mb-1.5 block text-sm font-medium text-slate-700">
           Observaciones
         </label>
         <textarea
@@ -87,19 +87,19 @@ export function ProveedorForm({ proveedorId, valoresIniciales }: ProveedorFormPr
           name="observaciones"
           rows={3}
           defaultValue={(v.observaciones as string) ?? ""}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+          className="input-field"
         />
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
-        <input type="checkbox" name="activo" defaultChecked={(v.activo as boolean) ?? true} />
+      <label className="flex items-center gap-2 text-sm text-slate-700">
+        <input type="checkbox" name="activo" defaultChecked={(v.activo as boolean) ?? true} className="rounded border-sky-300 text-brand-500 focus:ring-brand-400" />
         Proveedor activo
       </label>
 
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-lg bg-slate-900 px-5 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50 dark:bg-white dark:text-slate-900"
+        className="btn-primary disabled:opacity-50"
       >
         {isPending ? "Guardando..." : proveedorId ? "Guardar cambios" : "Crear proveedor"}
       </button>
@@ -124,7 +124,7 @@ function Campo({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+      <label htmlFor={name} className="mb-1.5 block text-sm font-medium text-slate-700">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <input
@@ -133,10 +133,10 @@ function Campo({
         type={type}
         defaultValue={defaultValue ?? ""}
         required={required}
-        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+        className="input-field"
       />
       {errores?.map((e) => (
-        <p key={e} className="mt-1 text-xs text-red-600">
+        <p key={e} className="mt-1 text-xs text-red-500">
           {e}
         </p>
       ))}

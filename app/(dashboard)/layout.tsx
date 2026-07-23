@@ -42,47 +42,72 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const cantidadAlertasNoLeidas = await alertasService.contarNoLeidas().catch(() => 0);
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
-      <aside className="hidden w-60 flex-col border-r border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 md:flex">
-        <div className="mb-6 px-2 text-lg font-semibold text-slate-900 dark:text-white">
-          Colorín Colorado
+    <div className="flex min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-sky-100">
+      {/* Sidebar */}
+      <aside className="hidden w-64 flex-col border-r border-sky-200/50 bg-white/80 backdrop-blur-md p-4 md:flex">
+        {/* Logo */}
+        <div className="mb-6 flex items-center gap-3 px-2">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-500 shadow-md">
+            <span className="text-lg font-bold text-white">CC</span>
+          </div>
+          <div>
+            <div className="text-lg font-bold text-slate-800">Colorín Colorado</div>
+            <div className="text-xs text-slate-500">Salón de Fiestas</div>
+          </div>
         </div>
+
+        {/* Navigation */}
         <nav className="flex-1 space-y-1">
           {itemsVisibles.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-slate-900 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+              className={`flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                item.href === "/dashboard"
+                  ? "bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-sm"
+                  : "text-slate-600 hover:bg-sky-50 hover:text-slate-900"
+              }`}
             >
               <span>{item.label}</span>
               {item.href === "/alertas" && cantidadAlertasNoLeidas > 0 && (
-                <span className="rounded-full bg-red-500 px-1.5 py-0.5 text-xs font-semibold text-white">
+                <span className="rounded-full bg-red-400 px-2 py-0.5 text-xs font-semibold text-white shadow-sm">
                   {cantidadAlertasNoLeidas}
                 </span>
               )}
             </Link>
           ))}
         </nav>
+
+        {/* Sidebar footer */}
+        <div className="mt-4 border-t border-sky-200/50 pt-4">
+          <div className="flex items-center gap-2 px-2 text-xs text-slate-500">
+            <div className="h-2 w-2 rounded-full bg-green-400"></div>
+            Sistema activo
+          </div>
+        </div>
       </aside>
 
+      {/* Main content */}
       <div className="flex flex-1 flex-col">
-        <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-3 dark:border-slate-800 dark:bg-slate-900">
+        {/* Header */}
+        <header className="flex items-center justify-between border-b border-sky-200/50 bg-white/80 backdrop-blur-md px-6 py-3">
           <input
             type="search"
             placeholder="Buscar productos, proveedores, eventos..."
-            className="w-80 max-w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:border-slate-500 dark:border-slate-700"
+            className="w-80 max-w-full rounded-xl border border-sky-200 bg-white px-4 py-2 text-sm text-slate-700 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
           />
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className="text-right text-sm">
-              <div className="font-medium text-slate-900 dark:text-white">
-                {nombrePerfil}
-              </div>
-              <div className="text-xs capitalize text-slate-900">{rolPerfil}</div>
+              <div className="font-semibold text-slate-800">{nombrePerfil}</div>
+              <div className="text-xs capitalize text-slate-500">{rolPerfil}</div>
+            </div>
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand-400 to-brand-500 flex items-center justify-center text-white font-semibold shadow-sm">
+              {nombrePerfil?.charAt(0)?.toUpperCase() ?? "U"}
             </div>
             <form action={logoutAction}>
               <button
                 type="submit"
-                className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                className="rounded-xl border border-sky-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
               >
                 Salir
               </button>
@@ -90,7 +115,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
         </header>
 
-        <main className="flex-1 p-6">{children}</main>
+        {/* Page content */}
+        <main className="flex-1 p-6 relative z-10">{children}</main>
       </div>
     </div>
   );

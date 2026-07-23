@@ -43,48 +43,41 @@ export function GastoForm({ proveedores }: { proveedores: Proveedor[] }) {
 
   if (!abierto) {
     return (
-      <button
-        onClick={() => setAbierto(true)}
-        className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-white dark:text-slate-900"
-      >
+      <button onClick={() => setAbierto(true)} className="btn-primary">
         + Nuevo gasto
       </button>
     );
   }
 
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+    <div className="card p-5">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Nuevo gasto</h2>
-        <button onClick={() => setAbierto(false)} className="text-slate-400 hover:text-slate-700">
+        <h2 className="text-sm font-semibold text-slate-700">Nuevo gasto</h2>
+        <button onClick={() => setAbierto(false)} className="text-slate-400 hover:text-slate-600">
           ✕
         </button>
       </div>
 
       {error && (
-        <div className="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-400">
+        <div className="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       <form action={handleSubmit} className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Fecha</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Fecha</label>
           <input
             type="date"
             name="fecha"
             defaultValue={new Date().toISOString().slice(0, 10)}
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Categoría</label>
-          <select
-            name="categoria"
-            required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-          >
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Categoría</label>
+          <select name="categoria" required className="select-field">
             {CATEGORIAS.map((c) => (
               <option key={c.value} value={c.value}>
                 {c.label}
@@ -94,22 +87,19 @@ export function GastoForm({ proveedores }: { proveedores: Proveedor[] }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Concepto</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Concepto</label>
           <input
             type="text"
             name="concepto"
             required
             placeholder="Ej: compra de servilletas y vasos"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Proveedor (opcional)</label>
-          <select
-            name="proveedor_id"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-          >
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Proveedor (opcional)</label>
+          <select name="proveedor_id" className="select-field">
             <option value="">Sin proveedor</option>
             {proveedores.map((p) => (
               <option key={p.id} value={p.id}>
@@ -120,23 +110,20 @@ export function GastoForm({ proveedores }: { proveedores: Proveedor[] }) {
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Importe</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Importe</label>
           <input
             type="number"
             name="importe"
             min="0"
             step="0.01"
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Medio de pago</label>
-          <select
-            name="medio_pago"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-          >
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Medio de pago</label>
+          <select name="medio_pago" className="select-field">
             <option value="">Sin especificar</option>
             <option value="efectivo">Efectivo</option>
             <option value="transferencia">Transferencia</option>
@@ -148,11 +135,11 @@ export function GastoForm({ proveedores }: { proveedores: Proveedor[] }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Observaciones</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Observaciones</label>
           <textarea
             name="observaciones"
             rows={2}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
 
@@ -160,7 +147,7 @@ export function GastoForm({ proveedores }: { proveedores: Proveedor[] }) {
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-lg bg-slate-900 px-5 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50 dark:bg-white dark:text-slate-900"
+            className="btn-primary disabled:opacity-50"
           >
             {isPending ? "Guardando..." : "Registrar gasto"}
           </button>

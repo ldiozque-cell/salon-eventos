@@ -76,39 +76,35 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
   return (
     <form action={handleSubmit} className="max-w-3xl space-y-6">
       {error && (
-        <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-400">
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Fecha</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Fecha</label>
           <input
             type="date"
             name="fecha"
             defaultValue={new Date().toISOString().slice(0, 10)}
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Nº de factura</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Nº de factura</label>
           <input
             type="text"
             name="numero_factura"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Proveedor</label>
-        <select
-          name="proveedor_id"
-          required
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-        >
+        <label className="mb-1.5 block text-sm font-medium text-slate-700">Proveedor</label>
+        <select name="proveedor_id" required className="select-field">
           <option value="">Seleccionar proveedor...</option>
           {proveedores.map((p) => (
             <option key={p.id} value={p.id}>
@@ -121,11 +117,11 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
       {/* Ítems de la compra */}
       <div>
         <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Productos comprados</label>
+          <label className="text-sm font-medium text-slate-700">Productos comprados</label>
           <button
             type="button"
             onClick={agregarItem}
-            className="text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+            className="text-sm font-medium text-brand-500 hover:text-brand-600"
           >
             + Agregar producto
           </button>
@@ -138,7 +134,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
                 value={item.producto_id}
                 onChange={(e) => seleccionarProducto(index, e.target.value)}
                 required
-                className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+                className="select-field flex-1"
               >
                 <option value="">Producto...</option>
                 {productos.map((p) => (
@@ -154,7 +150,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
                 value={item.cantidad}
                 onChange={(e) => actualizarItem(index, { cantidad: Number(e.target.value) })}
                 placeholder="Cant."
-                className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+                className="input-field w-24"
               />
               <input
                 type="number"
@@ -163,16 +159,16 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
                 value={item.precio_unitario}
                 onChange={(e) => actualizarItem(index, { precio_unitario: Number(e.target.value) })}
                 placeholder="Precio unit."
-                className="w-32 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+                className="input-field w-32"
               />
-              <span className="w-24 text-right text-sm text-slate-900">
+              <span className="w-24 text-right text-sm font-medium text-slate-600">
                 ${(item.cantidad * item.precio_unitario).toFixed(2)}
               </span>
               <button
                 type="button"
                 onClick={() => quitarItem(index)}
                 disabled={items.length === 1}
-                className="text-slate-400 hover:text-red-600 disabled:opacity-30"
+                className="text-slate-400 hover:text-red-500 disabled:opacity-30"
               >
                 ✕
               </button>
@@ -183,22 +179,19 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
 
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">IVA</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">IVA</label>
           <input
             type="number"
             name="iva"
             min="0"
             step="0.01"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Forma de pago</label>
-          <select
-            name="forma_pago"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-          >
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Forma de pago</label>
+          <select name="forma_pago" className="select-field">
             <option value="">Sin especificar</option>
             <option value="efectivo">Efectivo</option>
             <option value="transferencia">Transferencia</option>
@@ -209,12 +202,8 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Estado de pago</label>
-          <select
-            name="estado_pago"
-            defaultValue="pendiente"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-          >
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Estado de pago</label>
+          <select name="estado_pago" defaultValue="pendiente" className="select-field">
             <option value="pendiente">Pendiente</option>
             <option value="parcial">Parcial</option>
             <option value="pagado">Pagado</option>
@@ -223,22 +212,22 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
       </div>
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Observaciones</label>
+        <label className="mb-1.5 block text-sm font-medium text-slate-700">Observaciones</label>
         <textarea
           name="observaciones"
           rows={2}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+          className="input-field"
         />
       </div>
 
-      <div className="flex items-center justify-between border-t border-slate-200 pt-4 dark:border-slate-800">
-        <div className="text-sm text-slate-900">
-          Subtotal: <span className="font-semibold text-slate-900 dark:text-white">${subtotal.toFixed(2)}</span>
+      <div className="flex items-center justify-between border-t border-sky-200/50 pt-4">
+        <div className="text-sm text-slate-600">
+          Subtotal: <span className="font-semibold text-slate-800">${subtotal.toFixed(2)}</span>
         </div>
         <button
           type="submit"
           disabled={isPending}
-          className="rounded-lg bg-slate-900 px-5 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50 dark:bg-white dark:text-slate-900"
+          className="btn-primary disabled:opacity-50"
         >
           {isPending ? "Registrando..." : "Registrar compra"}
         </button>

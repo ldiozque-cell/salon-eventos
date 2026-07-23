@@ -10,10 +10,10 @@ const ETIQUETA_ESTADO: Record<string, string> = {
 };
 
 const COLOR_ESTADO: Record<string, string> = {
-  pendiente: "bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400",
-  parcial: "bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400",
-  pagado: "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400",
-  cancelado: "bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400",
+  pendiente: "badge-warning",
+  parcial: "badge-info",
+  pagado: "badge-success",
+  cancelado: "badge-danger",
 };
 
 export default async function EventosPage({
@@ -37,12 +37,12 @@ export default async function EventosPage({
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Eventos</h1>
-          <p className="text-sm text-slate-900">{count} eventos registrados</p>
+          <h1 className="page-title">Eventos</h1>
+          <p className="page-subtitle">{count} eventos registrados</p>
         </div>
         <Link
           href="/eventos/nuevo"
-          className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-white dark:text-slate-900"
+          className="btn-primary"
         >
           + Nuevo evento
         </Link>
@@ -52,7 +52,7 @@ export default async function EventosPage({
         <select
           name="estado"
           defaultValue={searchParams.estado ?? ""}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+          className="select-field"
         >
           <option value="">Todos los estados de pago</option>
           {Object.entries(ETIQUETA_ESTADO).map(([value, label]) => (
@@ -63,9 +63,9 @@ export default async function EventosPage({
         </select>
       </form>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+      <div className="card overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
+          <thead className="table-header">
             <tr>
               <th className="px-4 py-3">Fecha</th>
               <th className="px-4 py-3">Cliente</th>
@@ -76,25 +76,25 @@ export default async function EventosPage({
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+          <tbody className="divide-y divide-slate-100">
             {eventos?.map((e) => (
-              <tr key={e.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                <td className="px-4 py-3 whitespace-nowrap text-slate-900">
+              <tr key={e.id} className="table-row-hover">
+                <td className="px-4 py-3 whitespace-nowrap text-slate-700">
                   {e.fecha} {e.hora.slice(0, 5)}
                 </td>
-                <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{e.cliente_nombre}</td>
-                <td className="px-4 py-3 text-slate-900">{e.tematica ?? "—"}</td>
-                <td className="px-4 py-3 text-slate-900">
+                <td className="px-4 py-3 font-medium text-slate-800">{e.cliente_nombre}</td>
+                <td className="px-4 py-3 text-slate-700">{e.tematica ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-700">
                   {e.cantidad_ninos} / {e.cantidad_adultos}
                 </td>
                 <td className="px-4 py-3">${e.total_cobrado.toFixed(2)}</td>
                 <td className="px-4 py-3">
-                  <span className={`rounded-full px-2 py-0.5 text-xs ${COLOR_ESTADO[e.estado_pago]}`}>
+                  <span className={COLOR_ESTADO[e.estado_pago]}>
                     {ETIQUETA_ESTADO[e.estado_pago]}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">
-                  <Link href={`/eventos/${e.id}`} className="text-slate-900 hover:text-slate-900 dark:hover:text-white">
+                  <Link href={`/eventos/${e.id}`} className="text-brand-500 hover:text-brand-600 font-medium">
                     Ver
                   </Link>
                 </td>
@@ -102,7 +102,7 @@ export default async function EventosPage({
             ))}
             {eventos?.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-slate-900">
+                <td colSpan={7} className="empty-state">
                   No hay eventos con ese filtro.
                 </td>
               </tr>

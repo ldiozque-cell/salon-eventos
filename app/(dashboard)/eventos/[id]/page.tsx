@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { EventosService } from "@/lib/services/eventos.service";
 import { AgregarConsumoEventoForm } from "@/components/forms/AgregarConsumoEventoForm";
@@ -8,6 +9,13 @@ const ETIQUETA_ESTADO: Record<string, string> = {
   parcial: "Seña pagada",
   pagado: "Pagado",
   cancelado: "Cancelado",
+};
+
+const COLOR_ESTADO: Record<string, string> = {
+  pendiente: "badge-warning",
+  parcial: "badge-info",
+  pagado: "badge-success",
+  cancelado: "badge-danger",
 };
 
 export default async function DetalleEventoPage({ params }: { params: { id: string } }) {
@@ -31,8 +39,8 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{evento.cliente_nombre}</h1>
-        <p className="text-sm text-slate-900">
+        <h1 className="page-title">{evento.cliente_nombre}</h1>
+        <p className="page-subtitle">
           {evento.fecha} · {evento.hora.slice(0, 5)} hs · {evento.tematica ?? "sin temática"}
         </p>
       </div>
@@ -41,31 +49,33 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
         <Dato label="Niños" valor={String(evento.cantidad_ninos)} />
         <Dato label="Adultos" valor={String(evento.cantidad_adultos)} />
         <Dato label="Salón" valor={evento.salon ?? "—"} />
-        <Dato label="Estado de pago" valor={ETIQUETA_ESTADO[evento.estado_pago]} />
+        <Dato label="Estado de pago" valor={ETIQUETA_ESTADO[evento.estado_pago]} badge />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-        <Dato label="Total cobrado" valor={`$${evento.total_cobrado.toFixed(2)}`} />
-        <Dato label="Costo de insumos" valor={`$${costoInsumos.toFixed(2)}`} />
-        <Dato label="Margen" valor={`$${margen.toFixed(2)}`} destacado={margen >= 0 ? "positivo" : "negativo"} />
+      <div className="card p-5">
+        <div className="grid grid-cols-3 gap-4">
+          <Dato label="Total cobrado" valor={`$${evento.total_cobrado.toFixed(2)}`} />
+          <Dato label="Costo de insumos" valor={`$${costoInsumos.toFixed(2)}`} />
+          <Dato label="Margen" valor={`$${margen.toFixed(2)}`} destacado={margen >= 0 ? "positivo" : "negativo"} />
+        </div>
       </div>
 
       {/* Consumo de productos */}
-      <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-        <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">Consumo de productos</h2>
+      <div className="card p-5">
+        <h2 className="mb-4 text-sm font-semibold text-slate-700">Consumo de productos</h2>
 
-        <ul className="mb-4 divide-y divide-slate-100 dark:divide-slate-800">
+        <ul className="mb-4 divide-y divide-slate-100">
           {(evento as any).evento_consumos?.map((c: any) => (
             <li key={c.id} className="flex items-center justify-between py-2 text-sm">
-              <span className="font-medium text-slate-900 dark:text-white">{c.productos?.nombre}</span>
-              <span className="text-slate-900">
+              <span className="font-medium text-slate-700">{c.productos?.nombre}</span>
+              <span className="text-slate-600">
                 {c.cantidad} × ${c.productos?.precio_actual?.toFixed(2)} = $
                 {(c.cantidad * (c.productos?.precio_actual ?? 0)).toFixed(2)}
               </span>
             </li>
           ))}
           {(!(evento as any).evento_consumos || (evento as any).evento_consumos.length === 0) && (
-            <li className="py-4 text-center text-sm text-slate-900">Todavía no se cargó consumo.</li>
+            <li className="empty-state">Todavía no se cargó consumo.</li>
           )}
         </ul>
 
@@ -73,25 +83,25 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
       </div>
 
       {/* Ingresos asociados */}
-      <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-        <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">
+      <div className="card p-5">
+        <h2 className="mb-4 text-sm font-semibold text-slate-700">
           Ingresos registrados ({`$${totalIngresos.toFixed(2)}`} de ${evento.total_cobrado.toFixed(2)})
         </h2>
-        <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+        <ul className="divide-y divide-slate-100">
           {(evento as any).ingresos?.map((i: any) => (
             <li key={i.id} className="flex items-center justify-between py-2 text-sm">
-              <span className="font-medium capitalize text-slate-900 dark:text-white">{i.tipo}</span>
-              <span className="text-slate-900">
+              <span className="font-medium capitalize text-slate-700">{i.tipo}</span>
+              <span className="text-slate-600">
                 {i.fecha} · ${i.importe.toFixed(2)}
               </span>
             </li>
           ))}
           {(!(evento as any).ingresos || (evento as any).ingresos.length === 0) && (
-            <li className="py-4 text-center text-sm text-slate-900">
+            <li className="empty-state">
               Sin ingresos registrados todavía.{" "}
-              <a href={`/ingresos?evento=${evento.id}`} className="text-slate-700 underline dark:text-slate-300">
+              <Link href={`/ingresos?evento=${evento.id}`} className="text-brand-500 hover:text-brand-600 underline">
                 Registrar ingreso
-              </a>
+              </Link>
             </li>
           )}
         </ul>
@@ -104,21 +114,29 @@ function Dato({
   label,
   valor,
   destacado,
+  badge,
 }: {
   label: string;
   valor: string;
   destacado?: "positivo" | "negativo";
+  badge?: boolean;
 }) {
   const color =
     destacado === "positivo"
-      ? "text-green-600 dark:text-green-400"
+      ? "text-green-600"
       : destacado === "negativo"
-      ? "text-red-600 dark:text-red-400"
-      : "text-slate-900 dark:text-white";
+      ? "text-red-500"
+      : "text-slate-700";
   return (
     <div>
-      <p className="text-xs text-slate-900">{label}</p>
-      <p className={`text-lg font-semibold ${color}`}>{valor}</p>
+      <p className="text-xs font-medium text-slate-500">{label}</p>
+      {badge ? (
+        <span className={`mt-1 inline-block ${COLOR_ESTADO[valor] ? "" : ""}`}>
+          {valor}
+        </span>
+      ) : (
+        <p className={`text-lg font-semibold ${color}`}>{valor}</p>
+      )}
     </div>
   );
 }

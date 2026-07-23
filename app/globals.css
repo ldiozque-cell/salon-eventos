@@ -2,6 +2,178 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-bg: #f0f9ff;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f8fafc;
+  --color-border: #e2e8f0;
+  --color-text: #1e293b;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-primary: #ff6b35;
+  --color-primary-light: #FFD4B8;
+  --color-secondary: #0ea5e9;
+  --color-secondary-light: #E0F4FF;
+  --color-success: #22c55e;
+  --color-success-light: #D1E7DD;
+  --color-danger: #ef4444;
+  --color-danger-light: #FFD1D4;
+  --color-warning: #f59e0b;
+  --color-warning-light: #FFF3CD;
+  --color-info: #8b5cf6;
+  --color-info-light: #E8D5F0;
+}
+
 html {
-  color-scheme: light dark;
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Watermark overlay */
+.watermark-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/logo-colorin.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 60% auto;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Card styles */
+.card {
+  @apply rounded-xl border border-slate-200/80 bg-white/95 backdrop-blur-sm shadow-sm;
+}
+
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-md hover:border-slate-300/80;
+}
+
+/* Table styles */
+.table-header {
+  @apply bg-gradient-to-r from-sky-50 to-blue-50 text-left text-slate-700 font-semibold;
+}
+
+.table-cell {
+  @apply text-slate-700;
+}
+
+.table-row-hover {
+  @apply transition-colors duration-150 hover:bg-sky-50/50;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply rounded-lg bg-gradient-to-r from-brand-500 to-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:from-brand-600 hover:to-brand-700 hover:shadow-md active:scale-[0.98];
+}
+
+.btn-secondary {
+  @apply rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-200 hover:bg-slate-50 hover:border-slate-300;
+}
+
+.btn-success {
+  @apply rounded-lg bg-gradient-to-r from-green-500 to-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:from-green-600 hover:to-emerald-700 hover:shadow-md;
+}
+
+.btn-danger {
+  @apply rounded-lg bg-gradient-to-r from-red-500 to-rose-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:from-red-600 hover:to-rose-700;
+}
+
+/* Input styles */
+.input-field {
+  @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none transition-all duration-200 placeholder:text-slate-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-100;
+}
+
+.select-field {
+  @apply w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none transition-all duration-200 focus:border-brand-400 focus:ring-2 focus:ring-brand-100;
+}
+
+/* Badge styles */
+.badge {
+  @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+
+.badge-success {
+  @apply badge bg-green-100 text-green-700;
+}
+
+.badge-warning {
+  @apply badge bg-amber-100 text-amber-700;
+}
+
+.badge-danger {
+  @apply badge bg-red-100 text-red-700;
+}
+
+.badge-info {
+  @apply badge bg-blue-100 text-blue-700;
+}
+
+.badge-purple {
+  @apply badge bg-purple-100 text-purple-700;
+}
+
+/* KPI Card */
+.kpi-card {
+  @apply rounded-xl border border-slate-200/80 bg-white/95 backdrop-blur-sm p-5 shadow-sm transition-all duration-200 hover:shadow-md;
+}
+
+/* Sidebar */
+.sidebar {
+  @apply hidden w-60 flex-col border-r border-slate-200/80 bg-white/95 backdrop-blur-sm p-4 md:flex;
+}
+
+.sidebar-link {
+  @apply flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-sky-50 hover:text-slate-900;
+}
+
+.sidebar-link-active {
+  @apply sidebar-link bg-brand-50 text-brand-600;
+}
+
+/* Header */
+.header {
+  @apply flex items-center justify-between border-b border-slate-200/80 bg-white/95 backdrop-blur-sm px-6 py-3;
+}
+
+/* Page title */
+.page-title {
+  @apply text-2xl font-bold tracking-tight text-slate-800;
+}
+
+.page-subtitle {
+  @apply text-sm text-slate-500;
+}
+
+/* Empty state */
+.empty-state {
+  @apply py-8 text-center text-sm text-slate-500;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-slate-300 hover:bg-slate-400;
+}
+
+/* Focus visible */
+*:focus-visible {
+  @apply outline-none ring-2 ring-brand-400 ring-offset-2;
 }

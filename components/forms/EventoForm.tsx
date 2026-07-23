@@ -50,113 +50,109 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
   return (
     <form action={handleSubmit} className="max-w-3xl space-y-6">
       {error && (
-        <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-400">
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Cliente</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Cliente</label>
           <input
             type="text"
             name="cliente_nombre"
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Teléfono</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Teléfono</label>
           <input
             type="text"
             name="cliente_telefono"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Fecha</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Fecha</label>
           <input
             type="date"
             name="fecha"
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Hora</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Hora</label>
           <input
             type="time"
             name="hora"
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Cantidad de niños</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Cantidad de niños</label>
           <input
             type="number"
             name="cantidad_ninos"
             min="0"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Cantidad de adultos</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Cantidad de adultos</label>
           <input
             type="number"
             name="cantidad_adultos"
             min="0"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Temática</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Temática</label>
           <input
             type="text"
             name="tematica"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Salón</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Salón</label>
           <input
             type="text"
             name="salon"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Total cobrado</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Total cobrado</label>
           <input
             type="number"
             name="total_cobrado"
             min="0"
             step="0.01"
             defaultValue={0}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="input-field"
           />
         </div>
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Estado de pago</label>
-          <select
-            name="estado_pago"
-            defaultValue="pendiente"
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-          >
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Estado de pago</label>
+          <select name="estado_pago" defaultValue="pendiente" className="select-field">
             <option value="pendiente">Pendiente</option>
             <option value="parcial">Seña pagada</option>
             <option value="pagado">Pagado</option>
@@ -165,16 +161,16 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
         </div>
       </div>
 
-      {/* Consumo de productos (Módulo 7) — opcional al crear, se puede cargar después */}
+      {/* Consumo de productos */}
       <div>
         <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+          <label className="text-sm font-medium text-slate-700">
             Consumo de productos <span className="font-normal text-slate-400">(opcional, se puede cargar después)</span>
           </label>
           <button
             type="button"
             onClick={agregarConsumo}
-            className="text-sm font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
+            className="text-sm font-medium text-brand-500 hover:text-brand-600"
           >
             + Agregar producto
           </button>
@@ -186,7 +182,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
               <select
                 value={item.producto_id}
                 onChange={(e) => actualizarConsumo(index, { producto_id: e.target.value })}
-                className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+                className="select-field flex-1"
               >
                 <option value="">Producto...</option>
                 {productos.map((p) => (
@@ -202,12 +198,12 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
                 value={item.cantidad}
                 onChange={(e) => actualizarConsumo(index, { cantidad: Number(e.target.value) })}
                 placeholder="Cant."
-                className="w-24 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+                className="input-field w-24"
               />
               <button
                 type="button"
                 onClick={() => quitarConsumo(index)}
-                className="text-slate-400 hover:text-red-600"
+                className="text-slate-400 hover:text-red-500"
               >
                 ✕
               </button>
@@ -219,7 +215,7 @@ export function EventoForm({ productos }: { productos: Producto[] }) {
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-lg bg-slate-900 px-5 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50 dark:bg-white dark:text-slate-900"
+        className="btn-primary disabled:opacity-50"
       >
         {isPending ? "Guardando..." : "Crear evento"}
       </button>

@@ -36,8 +36,8 @@ export default async function GastosPage({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Gastos</h1>
-          <p className="text-sm text-slate-900">
+          <h1 className="page-title">Gastos</h1>
+          <p className="page-subtitle">
             {count} registros · ${totalListado.toFixed(2)} en esta vista
           </p>
         </div>

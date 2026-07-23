@@ -20,49 +20,40 @@ export default async function ProductosPage({
   });
 
   return (
-    <div>
-      <div className="mb-6 flex items-center justify-between">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Productos</h1>
-          <p className="text-sm text-slate-900">{count} productos registrados</p>
+          <h1 className="text-2xl font-bold text-slate-800">Productos</h1>
+          <p className="text-sm text-slate-500">{count} productos registrados</p>
         </div>
-        <Link
-          href="/productos/nuevo"
-          className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-white dark:text-slate-900"
-        >
+        <Link href="/productos/nuevo" className="btn-primary">
           + Nuevo producto
         </Link>
       </div>
 
-      <form className="mb-4 flex flex-wrap gap-3" method="get">
+      <form className="flex flex-wrap gap-3" method="get">
         <input
           type="search"
           name="q"
           defaultValue={searchParams.q}
           placeholder="Buscar por nombre..."
-          className="w-64 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+          className="input-field w-64"
         />
-        <select
-          name="estado"
-          defaultValue={searchParams.estado ?? ""}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
-        >
+        <select name="estado" defaultValue={searchParams.estado ?? ""} className="select-field w-48">
           <option value="">Todos los estados</option>
           <option value="activo">Activos</option>
           <option value="inactivo">Inactivos</option>
         </select>
-        <label className="flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700">
-          <input type="checkbox" name="stockBajo" value="1" defaultChecked={searchParams.stockBajo === "1"} />
+        <label className="flex items-center gap-2 rounded-xl border border-sky-200 bg-white px-3 py-2 text-sm text-slate-600">
+          <input type="checkbox" name="stockBajo" value="1" defaultChecked={searchParams.stockBajo === "1"} className="rounded border-sky-300 text-brand-500 focus:ring-brand-400" />
           Solo stock bajo
         </label>
-        <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800">
-          Filtrar
-        </button>
+        <button className="btn-secondary">Filtrar</button>
       </form>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+      <div className="overflow-x-auto rounded-xl border border-sky-200/50 bg-white/90 backdrop-blur-sm shadow-sm">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
+          <thead className="table-header">
             <tr>
               <th className="px-4 py-3">Código</th>
               <th className="px-4 py-3">Nombre</th>
@@ -73,31 +64,27 @@ export default async function ProductosPage({
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+          <tbody className="divide-y divide-slate-100">
             {productos?.map((p) => {
               const stockBajo = p.stock_actual <= p.stock_minimo;
               return (
-                <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                  <td className="px-4 py-3 font-mono text-xs text-slate-900">{p.codigo_interno}</td>
-                  <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{p.nombre}</td>
-                  <td className="px-4 py-3">${p.precio_actual.toFixed(2)}</td>
-                  <td className={`px-4 py-3 ${stockBajo ? "font-semibold text-red-600" : ""}`}>
+                <tr key={p.id} className="table-row-hover">
+                  <td className="px-4 py-3 font-mono text-xs text-slate-500">{p.codigo_interno}</td>
+                  <td className="px-4 py-3 font-medium text-slate-700">{p.nombre}</td>
+                  <td className="px-4 py-3 text-slate-600">${p.precio_actual.toFixed(2)}</td>
+                  <td className={`px-4 py-3 font-medium ${stockBajo ? "text-red-500" : "text-green-600"}`}>
                     {p.stock_actual} {stockBajo && "⚠"}
                   </td>
-                  <td className="px-4 py-3 text-slate-900">{p.stock_minimo}</td>
+                  <td className="px-4 py-3 text-slate-500">{p.stock_minimo}</td>
                   <td className="px-4 py-3">
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs ${
-                        p.estado === "activo"
-                          ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
-                           : "bg-slate-100 text-slate-900 dark:bg-slate-800"
-                      }`}
-                    >
-                      {p.estado}
-                    </span>
+                    {p.estado === "activo" ? (
+                      <span className="badge-success">activo</span>
+                    ) : (
+                      <span className="badge bg-slate-100 text-slate-600">inactivo</span>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <Link href={`/productos/${p.id}`} className="text-slate-900 hover:text-slate-900 dark:hover:text-white">
+                    <Link href={`/productos/${p.id}`} className="font-medium text-brand-500 hover:text-brand-600">
                       Ver
                     </Link>
                   </td>
@@ -106,7 +93,7 @@ export default async function ProductosPage({
             })}
             {productos?.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-slate-900">
+                <td colSpan={7} className="empty-state">
                   No se encontraron productos con esos filtros.
                 </td>
               </tr>

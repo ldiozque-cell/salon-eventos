@@ -22,12 +22,12 @@ export default async function ProveedoresPage({
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Proveedores</h1>
-          <p className="text-sm text-slate-900">{count} proveedores activos</p>
+          <h1 className="page-title">Proveedores</h1>
+          <p className="page-subtitle">{count} proveedores activos</p>
         </div>
         <Link
           href="/proveedores/nuevo"
-          className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-white dark:text-slate-900"
+          className="btn-primary"
         >
           + Nuevo proveedor
         </Link>
@@ -39,13 +39,13 @@ export default async function ProveedoresPage({
           name="q"
           defaultValue={searchParams.q}
           placeholder="Buscar por nombre o empresa..."
-          className="w-80 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+          className="input-field w-80"
         />
       </form>
 
-      <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
+      <div className="card overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
+          <thead className="table-header">
             <tr>
               <th className="px-4 py-3">Nombre</th>
               <th className="px-4 py-3">Empresa</th>
@@ -54,15 +54,15 @@ export default async function ProveedoresPage({
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+          <tbody className="divide-y divide-slate-100">
             {proveedores?.map((p) => (
-              <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{p.nombre}</td>
-                <td className="px-4 py-3 text-slate-900">{p.empresa ?? "—"}</td>
-                <td className="px-4 py-3 text-slate-900">{p.whatsapp ?? p.telefono ?? "—"}</td>
-                <td className="px-4 py-3 text-slate-900">{p.ciudad ?? "—"}</td>
+              <tr key={p.id} className="table-row-hover">
+                <td className="px-4 py-3 font-medium text-slate-800">{p.nombre}</td>
+                <td className="px-4 py-3 text-slate-700">{p.empresa ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-700">{p.whatsapp ?? p.telefono ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-700">{p.ciudad ?? "—"}</td>
                 <td className="px-4 py-3 text-right">
-                  <Link href={`/proveedores/${p.id}`} className="text-slate-900 hover:text-slate-900 dark:hover:text-white">
+                  <Link href={`/proveedores/${p.id}`} className="text-brand-500 hover:text-brand-600 font-medium">
                     Ver ficha
                   </Link>
                 </td>
@@ -70,7 +70,7 @@ export default async function ProveedoresPage({
             ))}
             {proveedores?.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-slate-900">
+                <td colSpan={5} className="empty-state">
                   No se encontraron proveedores.
                 </td>
               </tr>

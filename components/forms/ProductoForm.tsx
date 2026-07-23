@@ -11,7 +11,7 @@ interface Categoria {
 
 interface ProductoFormProps {
   categorias: Categoria[];
-  productoId?: string; // presente => modo edición
+  productoId?: string;
   valoresIniciales?: Record<string, string | number | null>;
 }
 
@@ -46,7 +46,7 @@ export function ProductoForm({ categorias, productoId, valoresIniciales }: Produ
   return (
     <form action={handleSubmit} className="max-w-2xl space-y-5">
       {error && (
-        <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700 dark:bg-red-900/30 dark:text-red-400">
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
@@ -60,11 +60,11 @@ export function ProductoForm({ categorias, productoId, valoresIniciales }: Produ
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Categoría</label>
+          <label className="mb-1.5 block text-sm font-medium text-slate-700">Categoría</label>
           <select
             name="categoria_id"
             defaultValue={(v.categoria_id as string) ?? ""}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+            className="select-field"
           >
             <option value="">Sin categoría</option>
             {categorias.map((c) => (
@@ -101,11 +101,11 @@ export function ProductoForm({ categorias, productoId, valoresIniciales }: Produ
       <Campo label="Ubicación física" name="ubicacion_fisica" defaultValue={v.ubicacion_fisica} errores={fieldErrors.ubicacion_fisica} />
 
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Estado</label>
+        <label className="mb-1.5 block text-sm font-medium text-slate-700">Estado</label>
         <select
           name="estado"
           defaultValue={(v.estado as string) ?? "activo"}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+          className="select-field"
         >
           <option value="activo">Activo</option>
           <option value="inactivo">Inactivo</option>
@@ -115,7 +115,7 @@ export function ProductoForm({ categorias, productoId, valoresIniciales }: Produ
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-lg bg-slate-900 px-5 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50 dark:bg-white dark:text-slate-900"
+        className="btn-primary disabled:opacity-50"
       >
         {isPending ? "Guardando..." : productoId ? "Guardar cambios" : "Crear producto"}
       </button>
@@ -142,7 +142,7 @@ function Campo({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">
+      <label htmlFor={name} className="mb-1.5 block text-sm font-medium text-slate-700">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
       <input
@@ -152,10 +152,10 @@ function Campo({
         step={step}
         defaultValue={defaultValue ?? ""}
         required={required}
-        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
+        className="input-field"
       />
       {errores?.map((e) => (
-        <p key={e} className="mt-1 text-xs text-red-600">
+        <p key={e} className="mt-1 text-xs text-red-500">
           {e}
         </p>
       ))}

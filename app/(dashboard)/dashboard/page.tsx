@@ -20,7 +20,6 @@ const ETIQUETA_MOVIMIENTO: Record<string, string> = {
 export default async function DashboardPage() {
   const supabase = createClient();
 
-  // Perfil solo para saber el rol y decidir qué KPIs financieros mostrar
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -29,7 +28,7 @@ export default async function DashboardPage() {
     .select("rol")
     .eq("id", user?.id)
     .maybeSingle();
-  const esAdmin = perfil?.rol === "admin" || perfilError === null && perfil?.rol === "admin";
+  const esAdmin = perfil?.rol === "admin" || (perfilError === null && perfil?.rol === "admin");
 
   const service = new DashboardService(supabase);
   const resumen = await service.obtenerResumenCompleto();
@@ -47,10 +46,10 @@ export default async function DashboardPage() {
   } = resumen;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Dashboard</h1>
-        <p className="text-sm text-slate-900">Resumen del mes en curso</p>
+        <h1 className="text-2xl font-bold text-slate-800">Dashboard</h1>
+        <p className="text-sm text-slate-500">Resumen del mes en curso</p>
       </div>
 
       {/* KPIs principales */}
@@ -81,38 +80,34 @@ export default async function DashboardPage() {
         />
       </div>
 
-      {/* Gráficos: solo visibles para admin, que es quien ve rentabilidad */}
+      {/* Gráficos */}
       {esAdmin && (
         <div className="grid gap-4 lg:grid-cols-3">
-          <div className="rounded-xl border border-slate-200 bg-white p-5 lg:col-span-2 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Evolución mensual (últimos 12 meses)
-            </h2>
+          <div className="card p-5 lg:col-span-2">
+            <h2 className="mb-4 text-sm font-semibold text-slate-700">Evolución mensual (últimos 12 meses)</h2>
             <EvolucionMensualChart datos={evolucionMensual ?? []} />
           </div>
-          <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Gastos por categoría (este mes)
-            </h2>
+          <div className="card p-5">
+            <h2 className="mb-4 text-sm font-semibold text-slate-700">Gastos por categoría (este mes)</h2>
             <GastosPorCategoriaChart datos={gastosPorCategoria ?? []} />
           </div>
         </div>
       )}
 
       {/* Compras sugeridas */}
-      <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <div className="card p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Próximas compras sugeridas</h2>
-          <Link href="/compras/nueva" className="text-xs font-medium text-slate-900 hover:text-slate-900 dark:hover:text-white">
+          <h2 className="text-sm font-semibold text-slate-700">Próximas compras sugeridas</h2>
+          <Link href="/compras/nueva" className="text-xs font-medium text-brand-500 hover:text-brand-600">
             Registrar compra →
           </Link>
         </div>
         {comprasSugeridas && comprasSugeridas.length > 0 ? (
-          <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+          <ul className="divide-y divide-slate-100">
             {comprasSugeridas.map((p) => (
               <li key={p.producto_id} className="flex items-center justify-between py-2 text-sm">
-                <span className="font-medium text-slate-900 dark:text-white">{p.nombre}</span>
-                <span className="text-slate-900">
+                <span className="font-medium text-slate-700">{p.nombre}</span>
+                <span className="text-slate-600">
                   Stock: {p.stock_actual} / mín. {p.stock_minimo} · sugerido:{" "}
                   <span className="font-semibold text-amber-600">{p.cantidad_sugerida}</span>
                 </span>
@@ -120,58 +115,58 @@ export default async function DashboardPage() {
             ))}
           </ul>
         ) : (
-          <p className="text-sm text-slate-900">No hay productos por debajo del stock mínimo. 👍</p>
+          <p className="empty-state">No hay productos por debajo del stock mínimo.</p>
         )}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Últimos movimientos */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <div className="card p-5">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Últimos movimientos</h2>
-            <Link href="/inventario/movimientos" className="text-xs font-medium text-slate-900 hover:text-slate-900 dark:hover:text-white">
+            <h2 className="text-sm font-semibold text-slate-700">Últimos movimientos</h2>
+            <Link href="/inventario/movimientos" className="text-xs font-medium text-brand-500 hover:text-brand-600">
               Ver todos →
             </Link>
           </div>
-          <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+          <ul className="divide-y divide-slate-100">
             {ultimosMovimientos?.map((m: any) => (
               <li key={m.id} className="flex items-center justify-between py-2 text-sm">
                 <div>
-                  <span className="font-medium text-slate-900 dark:text-white">{m.productos?.nombre}</span>
+                  <span className="font-medium text-slate-700">{m.productos?.nombre}</span>
                   <span className="ml-2 text-xs text-slate-400">{ETIQUETA_MOVIMIENTO[m.tipo] ?? m.tipo}</span>
                 </div>
-                <span className={m.cantidad >= 0 ? "text-green-600" : "text-red-600"}>
+                <span className={m.cantidad >= 0 ? "text-green-600" : "text-red-500"}>
                   {m.cantidad >= 0 ? "+" : ""}
                   {m.cantidad}
                 </span>
               </li>
             ))}
             {(!ultimosMovimientos || ultimosMovimientos.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-900">Sin movimientos todavía.</li>
+              <li className="empty-state">Sin movimientos todavía.</li>
             )}
           </ul>
         </div>
 
         {/* Compras recientes */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <div className="card p-5">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Compras recientes</h2>
-            <Link href="/compras" className="text-xs font-medium text-slate-900 hover:text-slate-900 dark:hover:text-white">
+            <h2 className="text-sm font-semibold text-slate-700">Compras recientes</h2>
+            <Link href="/compras" className="text-xs font-medium text-brand-500 hover:text-brand-600">
               Ver todas →
             </Link>
           </div>
-          <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+          <ul className="divide-y divide-slate-100">
             {comprasRecientes?.map((c: any) => (
               <li key={c.id} className="flex items-center justify-between py-2 text-sm">
                 <div>
-                  <span className="font-medium text-slate-900 dark:text-white">{c.proveedores?.nombre}</span>
+                  <span className="font-medium text-slate-700">{c.proveedores?.nombre}</span>
                   <span className="ml-2 text-xs text-slate-400">{c.fecha}</span>
                 </div>
-                <span className="text-slate-600 dark:text-slate-300">{formatoMoneda(c.total)}</span>
+                <span className="text-slate-600">{formatoMoneda(c.total)}</span>
               </li>
             ))}
             {(!comprasRecientes || comprasRecientes.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-900">Sin compras todavía.</li>
+              <li className="empty-state">Sin compras todavía.</li>
             )}
           </ul>
         </div>
@@ -179,39 +174,37 @@ export default async function DashboardPage() {
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Productos más utilizados */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">Productos más utilizados</h2>
-          <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="card p-5">
+          <h2 className="mb-4 text-sm font-semibold text-slate-700">Productos más utilizados</h2>
+          <ul className="divide-y divide-slate-100">
             {productosMasUtilizados?.map((p) => (
               <li key={p.producto_id} className="flex items-center justify-between py-2 text-sm">
-                <span className="font-medium text-slate-900 dark:text-white">{p.nombre}</span>
-                <span className="text-slate-900">
+                <span className="font-medium text-slate-700">{p.nombre}</span>
+                <span className="text-slate-600">
                   {p.cantidad_total_consumida} unid. · {p.cantidad_eventos} eventos
                 </span>
               </li>
             ))}
             {(!productosMasUtilizados || productosMasUtilizados.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-900">Todavía no hay consumo registrado.</li>
+              <li className="empty-state">Todavía no hay consumo registrado.</li>
             )}
           </ul>
         </div>
 
         {/* Proveedores con mayor volumen */}
-        <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">
-            Proveedores con mayor volumen de compra
-          </h2>
-          <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="card p-5">
+          <h2 className="mb-4 text-sm font-semibold text-slate-700">Proveedores con mayor volumen de compra</h2>
+          <ul className="divide-y divide-slate-100">
             {proveedoresMayorVolumen?.map((p) => (
               <li key={p.proveedor_id} className="flex items-center justify-between py-2 text-sm">
-                <span className="font-medium text-slate-900 dark:text-white">{p.nombre}</span>
-                <span className="text-slate-900">
+                <span className="font-medium text-slate-700">{p.nombre}</span>
+                <span className="text-slate-600">
                   {formatoMoneda(p.total_comprado)} · {p.cantidad_compras} compras
                 </span>
               </li>
             ))}
             {(!proveedoresMayorVolumen || proveedoresMayorVolumen.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-900">Todavía no hay compras registradas.</li>
+              <li className="empty-state">Todavía no hay compras registradas.</li>
             )}
           </ul>
         </div>
