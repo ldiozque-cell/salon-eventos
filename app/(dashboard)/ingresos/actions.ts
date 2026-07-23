@@ -40,3 +40,58 @@ export async function crearIngresoAction(formData: FormData): Promise<ActionResu
     return manejarError(error);
   }
 }
+
+export async function actualizarIngresoAction(
+  id: string,
+  formData: FormData
+): Promise<ActionResult<{ id: string }>> {
+  try {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return { ok: false, error: "No autenticado" };
+
+    const { data: perfil } = await supabase.from("perfiles").select("rol").eq("id", user.id).single();
+    if (perfil?.rol !== "admin") {
+      return { ok: false, error: "Solo un administrador puede editar ingresos" };
+    }
+
+    const service = new IngresosService(supabase);
+    const input = Object.fromEntries(formData.entries());
+    const ingreso = await service.actualizar(id, input);
+
+    revalidatePath("/ingresos");
+    revalidatePath("/balance");
+    revalidatePath("/dashboard");
+    if (input.evento_id) revalidatePath(`/eventos/${input.evento_id}`);
+    return { ok: true, data: { id: ingreso?.id ?? id } };
+  } catch (error) {
+    return manejarError(error);
+  }
+}
+
+export async function eliminarIngresoAction(id: string): Promise<ActionResult> {
+  try {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return { ok: false, error: "No autenticado" };
+
+    const { data: perfil } = await supabase.from("perfiles").select("rol").eq("id", user.id).single();
+    if (perfil?.rol !== "admin") {
+      return { ok: false, error: "Solo un administrador puede eliminar ingresos" };
+    }
+
+    const service = new IngresosService(supabase);
+    await service.eliminar(id);
+
+    revalidatePath("/ingresos");
+    revalidatePath("/balance");
+    revalidatePath("/dashboard");
+    return { ok: true, data: undefined };
+  } catch (error) {
+    return manejarError(error);
+  }
+}

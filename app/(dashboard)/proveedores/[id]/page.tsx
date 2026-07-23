@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { ProveedoresService } from "@/lib/services/proveedores.service";
 import { ProveedorForm } from "@/components/forms/ProveedorForm";
+import { ProveedorAcciones } from "./ProveedorAcciones";
 
 export default async function FichaProveedorPage({ params }: { params: { id: string } }) {
   const supabase = createClient();
@@ -15,9 +16,12 @@ export default async function FichaProveedorPage({ params }: { params: { id: str
 
   return (
     <div className="max-w-3xl space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{proveedor.nombre}</h1>
-        <p className="text-sm text-slate-900">{proveedor.empresa ?? "Sin empresa registrada"}</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{proveedor.nombre}</h1>
+          <p className="text-sm text-slate-900">{proveedor.empresa ?? "Sin empresa registrada"}</p>
+        </div>
+        <ProveedorAcciones proveedorId={proveedor.id} activo={proveedor.activo} />
       </div>
 
       {/* Métricas agregadas */}

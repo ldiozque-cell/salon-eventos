@@ -77,6 +77,25 @@ export async function actualizarEventoAction(
   }
 }
 
+export async function eliminarEventoAction(id: string): Promise<ActionResult> {
+  try {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return { ok: false, error: "No autenticado" };
+
+    const service = new EventosService(supabase);
+    await service.eliminar(id);
+
+    revalidatePath("/eventos");
+    revalidatePath("/dashboard");
+    return { ok: true, data: undefined };
+  } catch (error) {
+    return manejarError(error);
+  }
+}
+
 /** Agrega consumo de productos a un evento ya creado (el día del evento) */
 export async function agregarConsumoEventoAction(
   eventoId: string,

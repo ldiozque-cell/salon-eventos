@@ -42,6 +42,32 @@ export class IngresosRepository {
     return data;
   }
 
+  async obtenerPorId(id: string) {
+    const { data, error } = await this.supabase
+      .from("ingresos")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  async actualizar(id: string, cambios: Ingresos["Update"]): Promise<Ingresos["Row"] | null> {
+    const { data, error } = await this.supabase
+      .from("ingresos")
+      .update(cambios)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  async eliminar(id: string) {
+    const { error } = await this.supabase.from("ingresos").delete().eq("id", id);
+    if (error) throw error;
+  }
+
   async totalPeriodo(desde: string, hasta: string) {
     const { data, error } = await this.supabase
       .from("ingresos")

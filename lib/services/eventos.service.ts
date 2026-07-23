@@ -74,6 +74,10 @@ export class EventosService {
     return evento ? { id: evento.id } : null;
   }
 
+  async eliminar(id: string) {
+    return this.repo.eliminar(id);
+  }
+
   /** Agregar consumo a un evento ya existente (ej: el día del evento) */
   async agregarConsumo(eventoId: string, items: { producto_id: string; cantidad: number }[]) {
     try {

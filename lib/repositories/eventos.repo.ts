@@ -82,6 +82,11 @@ export class EventosRepository {
     return resultados;
   }
 
+  async eliminar(id: string) {
+    const { error } = await this.supabase.from("eventos").delete().eq("id", id);
+    if (error) throw error;
+  }
+
   async eventosProximos(dias = 14) {
     const hoy = new Date().toISOString().slice(0, 10);
     const limite = new Date(Date.now() + dias * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);

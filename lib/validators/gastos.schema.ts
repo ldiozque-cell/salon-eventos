@@ -26,3 +26,6 @@ export const gastoSchema = z.object({
 });
 
 export type GastoInput = z.infer<typeof gastoSchema>;
+
+export const gastoUpdateSchema = gastoSchema.partial();
+export type GastoUpdateInput = z.infer<typeof gastoUpdateSchema>;

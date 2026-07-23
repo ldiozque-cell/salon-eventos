@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { crearIngresoAction } from "@/app/(dashboard)/ingresos/actions";
+import { crearIngresoAction, actualizarIngresoAction } from "@/app/(dashboard)/ingresos/actions";
 
 interface Evento {
   id: string;
@@ -19,26 +19,52 @@ const TIPOS = [
   { value: "reembolso", label: "Reembolso (importe negativo)" },
 ];
 
-export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Evento[]; eventoPreseleccionado?: string }) {
+interface IngresoFormProps {
+  eventos: Evento[];
+  eventoPreseleccionado?: string;
+  ingresoId?: string;
+  valoresIniciales?: {
+    tipo?: string;
+    fecha?: string;
+    evento_id?: string;
+    importe?: number;
+    medio_pago?: string;
+    observaciones?: string;
+  };
+  onGuardado?: () => void;
+}
+
+export function IngresoForm({
+  eventos,
+  eventoPreseleccionado,
+  ingresoId,
+  valoresIniciales,
+  onGuardado,
+}: IngresoFormProps) {
   const router = useRouter();
   const [abierto, setAbierto] = useState(Boolean(eventoPreseleccionado));
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
+  const esEdicion = Boolean(ingresoId);
+
   async function handleSubmit(formData: FormData) {
     setError(null);
     startTransition(async () => {
-      const resultado = await crearIngresoAction(formData);
+      const resultado = esEdicion
+        ? await actualizarIngresoAction(ingresoId!, formData)
+        : await crearIngresoAction(formData);
       if (!resultado.ok) {
         setError(resultado.error);
         return;
       }
       setAbierto(false);
+      onGuardado?.();
       router.refresh();
     });
   }
 
-  if (!abierto) {
+  if (!abierto && !esEdicion) {
     return (
       <button onClick={() => setAbierto(true)} className="btn-primary">
         + Nuevo ingreso
@@ -49,10 +75,14 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
   return (
     <div className="card p-5">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-sm font-semibold text-slate-700">Nuevo ingreso</h2>
-        <button onClick={() => setAbierto(false)} className="text-slate-400 hover:text-slate-600">
-          ✕
-        </button>
+        <h2 className="text-sm font-semibold text-slate-700">
+          {esEdicion ? "Editar ingreso" : "Nuevo ingreso"}
+        </h2>
+        {!esEdicion && (
+          <button onClick={() => setAbierto(false)} className="text-slate-400 hover:text-slate-600">
+            ✕
+          </button>
+        )}
       </div>
 
       {error && (
@@ -64,7 +94,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
       <form action={handleSubmit} className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-700">Tipo</label>
-          <select name="tipo" required className="select-field">
+          <select name="tipo" required defaultValue={valoresIniciales?.tipo ?? ""} className="select-field">
             {TIPOS.map((t) => (
               <option key={t.value} value={t.value}>
                 {t.label}
@@ -78,7 +108,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
           <input
             type="date"
             name="fecha"
-            defaultValue={new Date().toISOString().slice(0, 10)}
+            defaultValue={valoresIniciales?.fecha ?? new Date().toISOString().slice(0, 10)}
             required
             className="input-field"
           />
@@ -90,7 +120,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
           </label>
           <select
             name="evento_id"
-            defaultValue={eventoPreseleccionado ?? ""}
+            defaultValue={valoresIniciales?.evento_id ?? eventoPreseleccionado ?? ""}
             className="select-field"
           >
             <option value="">Sin evento asociado</option>
@@ -108,6 +138,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
             type="number"
             name="importe"
             step="0.01"
+            defaultValue={valoresIniciales?.importe ?? ""}
             required
             className="input-field"
           />
@@ -116,7 +147,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
 
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-700">Medio de pago</label>
-          <select name="medio_pago" className="select-field">
+          <select name="medio_pago" defaultValue={valoresIniciales?.medio_pago ?? ""} className="select-field">
             <option value="">Sin especificar</option>
             <option value="efectivo">Efectivo</option>
             <option value="transferencia">Transferencia</option>
@@ -132,6 +163,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
           <textarea
             name="observaciones"
             rows={2}
+            defaultValue={valoresIniciales?.observaciones ?? ""}
             className="input-field"
           />
         </div>
@@ -142,7 +174,7 @@ export function IngresoForm({ eventos, eventoPreseleccionado }: { eventos: Event
             disabled={isPending}
             className="btn-primary disabled:opacity-50"
           >
-            {isPending ? "Guardando..." : "Registrar ingreso"}
+            {isPending ? "Guardando..." : esEdicion ? "Guardar cambios" : "Registrar ingreso"}
           </button>
         </div>
       </form>

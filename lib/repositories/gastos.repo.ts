@@ -40,6 +40,32 @@ export class GastosRepository {
     return data;
   }
 
+  async obtenerPorId(id: string) {
+    const { data, error } = await this.supabase
+      .from("gastos")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  async actualizar(id: string, cambios: Gastos["Update"]): Promise<Gastos["Row"] | null> {
+    const { data, error } = await this.supabase
+      .from("gastos")
+      .update(cambios)
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  }
+
+  async eliminar(id: string) {
+    const { error } = await this.supabase.from("gastos").delete().eq("id", id);
+    if (error) throw error;
+  }
+
   async totalPeriodo(desde: string, hasta: string) {
     const { data, error } = await this.supabase
       .from("gastos")

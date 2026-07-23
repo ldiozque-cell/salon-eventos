@@ -41,3 +41,57 @@ export async function crearGastoAction(formData: FormData): Promise<ActionResult
     return manejarError(error);
   }
 }
+
+export async function actualizarGastoAction(
+  id: string,
+  formData: FormData
+): Promise<ActionResult<{ id: string }>> {
+  try {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return { ok: false, error: "No autenticado" };
+
+    const { data: perfil } = await supabase.from("perfiles").select("rol").eq("id", user.id).single();
+    if (perfil?.rol !== "admin") {
+      return { ok: false, error: "Solo un administrador puede editar gastos" };
+    }
+
+    const service = new GastosService(supabase);
+    const input = Object.fromEntries(formData.entries());
+    const gasto = await service.actualizar(id, input);
+
+    revalidatePath("/gastos");
+    revalidatePath("/balance");
+    revalidatePath("/dashboard");
+    return { ok: true, data: { id: gasto?.id ?? id } };
+  } catch (error) {
+    return manejarError(error);
+  }
+}
+
+export async function eliminarGastoAction(id: string): Promise<ActionResult> {
+  try {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return { ok: false, error: "No autenticado" };
+
+    const { data: perfil } = await supabase.from("perfiles").select("rol").eq("id", user.id).single();
+    if (perfil?.rol !== "admin") {
+      return { ok: false, error: "Solo un administrador puede eliminar gastos" };
+    }
+
+    const service = new GastosService(supabase);
+    await service.eliminar(id);
+
+    revalidatePath("/gastos");
+    revalidatePath("/balance");
+    revalidatePath("/dashboard");
+    return { ok: true, data: undefined };
+  } catch (error) {
+    return manejarError(error);
+  }
+}

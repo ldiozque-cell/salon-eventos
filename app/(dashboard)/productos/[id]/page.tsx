@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ProductosService } from "@/lib/services/productos.service";
 import { ProductoForm } from "@/components/forms/ProductoForm";
+import { ProductoAcciones } from "./ProductoAcciones";
 
 const ETIQUETA_MOVIMIENTO: Record<string, string> = {
   entrada_compra: "Entrada por compra",
@@ -33,9 +34,12 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
 
   return (
     <div className="max-w-3xl space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{producto.nombre}</h1>
-        <p className="font-mono text-sm text-slate-900">{producto.codigo_interno}</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{producto.nombre}</h1>
+          <p className="font-mono text-sm text-slate-900">{producto.codigo_interno}</p>
+        </div>
+        <ProductoAcciones productoId={producto.id} estado={producto.estado} />
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
