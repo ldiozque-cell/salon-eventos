@@ -3,6 +3,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { logoutAction } from "@/app/(auth)/login/actions";
 import { AlertasService } from "@/lib/services/alertas.service";
+import { ToastProvider } from "@/components/ui/ToastProvider";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", soloAdmin: false },
@@ -42,6 +43,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const cantidadAlertasNoLeidas = await alertasService.contarNoLeidas().catch(() => 0);
 
   return (
+    <ToastProvider>
     <div className="flex min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-sky-100">
       {/* Sidebar */}
       <aside className="hidden w-64 flex-col border-r border-sky-200/50 bg-white/80 backdrop-blur-md p-4 md:flex">
@@ -119,5 +121,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <main className="flex-1 p-6 relative z-10">{children}</main>
       </div>
     </div>
+    </ToastProvider>
   );
 }

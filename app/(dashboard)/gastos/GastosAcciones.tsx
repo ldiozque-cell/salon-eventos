@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { CrudModal } from "@/components/ui/CrudModal";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { showToast } from "@/components/ui/Toast";
 import { GastoForm } from "@/components/forms/GastoForm";
-import { eliminarGastoAction } from "@/app/(dashboard)/gastos/actions";
+import { actualizarGastoAction, eliminarGastoAction } from "@/app/(dashboard)/gastos/actions";
 
 interface Proveedor {
   id: string;
@@ -27,60 +30,74 @@ interface GastosAccionesProps {
 export function GastosAcciones({ gastoId, gasto, proveedores }: GastosAccionesProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [modo, setModo] = useState<"lista" | "edicion">("lista");
-  const [error, setError] = useState<string | null>(null);
+  const [modoEdicion, setModoEdicion] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  function handleEliminar() {
-    if (!confirm("¿Estás seguro de eliminar este gasto?")) return;
+  const handleEliminar = useCallback(() => {
+    setShowConfirm(true);
+  }, []);
+
+  const confirmarEliminar = useCallback(() => {
     startTransition(async () => {
       const resultado = await eliminarGastoAction(gastoId);
       if (!resultado.ok) {
-        setError(resultado.error);
+        showToast("error", resultado.error);
+        setShowConfirm(false);
         return;
       }
+      showToast("exito", "Gasto eliminado correctamente");
+      setShowConfirm(false);
       router.refresh();
     });
-  }
-
-  if (modo === "edicion") {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-        <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white p-6 shadow-xl">
-          <GastoForm
-            proveedores={proveedores}
-            gastoId={gastoId}
-            valoresIniciales={{
-              fecha: gasto.fecha,
-              categoria: gasto.categoria,
-              concepto: gasto.concepto,
-              proveedor_id: gasto.proveedor_id ?? "",
-              importe: gasto.importe,
-              medio_pago: gasto.medio_pago ?? "",
-              observaciones: gasto.observaciones ?? "",
-            }}
-            onGuardado={() => setModo("lista")}
-          />
-        </div>
-      </div>
-    );
-  }
+  }, [gastoId, router]);
 
   return (
-    <div className="flex items-center justify-end gap-2">
-      {error && <span className="text-xs text-red-500">{error}</span>}
-      <button
-        onClick={() => setModo("edicion")}
-        className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
-      >
-        Editar
-      </button>
-      <button
-        onClick={handleEliminar}
-        disabled={isPending}
-        className="rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
-      >
-        {isPending ? "..." : "Eliminar"}
-      </button>
-    </div>
+    <>
+      <div className="flex items-center justify-end gap-2">
+        <button
+          onClick={() => setModoEdicion(true)}
+          className="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-50"
+        >
+          Editar
+        </button>
+        <button
+          onClick={handleEliminar}
+          className="rounded-lg border border-red-200 bg-white px-3 py-1.5 text-xs font-medium text-red-600 transition-colors hover:bg-red-50"
+        >
+          Eliminar
+        </button>
+      </div>
+
+      <CrudModal abierto={modoEdicion} titulo="Editar gasto" onClose={() => setModoEdicion(false)}>
+        <GastoForm
+          proveedores={proveedores}
+          gastoId={gastoId}
+          valoresIniciales={{
+            fecha: gasto.fecha,
+            categoria: gasto.categoria,
+            concepto: gasto.concepto,
+            proveedor_id: gasto.proveedor_id ?? "",
+            importe: gasto.importe,
+            medio_pago: gasto.medio_pago ?? "",
+            observaciones: gasto.observaciones ?? "",
+          }}
+          onGuardado={() => {
+            setModoEdicion(false);
+            showToast("exito", "Gasto actualizado correctamente");
+          }}
+        />
+      </CrudModal>
+
+      <ConfirmDialog
+        abierto={showConfirm}
+        titulo="Eliminar gasto"
+        mensaje="¿Está seguro que desea eliminar este registro? Esta acción no se puede deshacer."
+        textoConfirmar="Eliminar"
+        variante="peligro"
+        onConfirmar={confirmarEliminar}
+        onCancelar={() => setShowConfirm(false)}
+        isPending={isPending}
+      />
+    </>
   );
 }
