@@ -22,7 +22,7 @@ export interface DatosReporte {
  */
 export async function generarExcel(datos: DatosReporte): Promise<Buffer> {
   const workbook = new ExcelJS.Workbook();
-  workbook.creator = "Salón de Eventos — Sistema de Gestión";
+  workbook.creator = "Colorín Colorado — Sistema de Gestión";
   workbook.created = new Date();
 
   const hoja = workbook.addWorksheet(datos.titulo.slice(0, 31)); // Excel limita el nombre a 31 chars

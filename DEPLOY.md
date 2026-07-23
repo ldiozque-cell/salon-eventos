@@ -1,4 +1,4 @@
-# Guía de despliegue — Salón de Eventos
+# Guía de despliegue — Colorín Colorado
 
 Checklist completo para pasar de "código en la compu" a "app funcionando
 en internet". Pensada para alguien que nunca desplegó nada: cada paso

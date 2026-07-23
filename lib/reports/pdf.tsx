@@ -81,7 +81,7 @@ function ReportePdfDocument({ datos }: { datos: DatosReporte }) {
 
         <Text
           style={estilos.footer}
-          render={({ pageNumber, totalPages }) => `Página ${pageNumber} de ${totalPages} · Salón de Eventos`}
+          render={({ pageNumber, totalPages }) => `Página ${pageNumber} de ${totalPages} · Colorín Colorado`}
           fixed
         />
       </Page>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Salón de Eventos Infantiles — Gestión",
+  title: "Colorín Colorado Infantiles — Gestión",
   description: "Sistema integral de gestión: inventario, compras, proveedores, eventos y finanzas.",
 };
 

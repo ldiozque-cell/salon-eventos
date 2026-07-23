@@ -1,4 +1,4 @@
-# Sistema de Gestión Integral — Salón de Eventos Infantiles
+# Sistema de Gestión Integral — Colorín Colorado Infantiles
 ## Documento de Arquitectura de Software
 
 ---

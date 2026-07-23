@@ -45,7 +45,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950">
       <aside className="hidden w-60 flex-col border-r border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900 md:flex">
         <div className="mb-6 px-2 text-lg font-semibold text-slate-900 dark:text-white">
-          Salón de Eventos
+          Colorín Colorado
         </div>
         <nav className="flex-1 space-y-1">
           {itemsVisibles.map((item) => (

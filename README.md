@@ -1,4 +1,4 @@
-# Salón de Eventos Infantiles — Sistema de Gestión
+# Colorín Colorado Infantiles — Sistema de Gestión
 
 ## Estado actual del proyecto
 El proyecto quedó en un estado funcional para uso operativo local y para cerrar la parte de producción con un último ajuste de compilación.
