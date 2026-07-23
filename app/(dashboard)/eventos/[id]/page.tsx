@@ -32,7 +32,7 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
     <div className="max-w-3xl space-y-6">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{evento.cliente_nombre}</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-900">
           {evento.fecha} · {evento.hora.slice(0, 5)} hs · {evento.tematica ?? "sin temática"}
         </p>
       </div>
@@ -58,14 +58,14 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
           {(evento as any).evento_consumos?.map((c: any) => (
             <li key={c.id} className="flex items-center justify-between py-2 text-sm">
               <span className="font-medium text-slate-900 dark:text-white">{c.productos?.nombre}</span>
-              <span className="text-slate-500">
+              <span className="text-slate-900">
                 {c.cantidad} × ${c.productos?.precio_actual?.toFixed(2)} = $
                 {(c.cantidad * (c.productos?.precio_actual ?? 0)).toFixed(2)}
               </span>
             </li>
           ))}
           {(!(evento as any).evento_consumos || (evento as any).evento_consumos.length === 0) && (
-            <li className="py-4 text-center text-sm text-slate-400">Todavía no se cargó consumo.</li>
+            <li className="py-4 text-center text-sm text-slate-900">Todavía no se cargó consumo.</li>
           )}
         </ul>
 
@@ -81,13 +81,13 @@ export default async function DetalleEventoPage({ params }: { params: { id: stri
           {(evento as any).ingresos?.map((i: any) => (
             <li key={i.id} className="flex items-center justify-between py-2 text-sm">
               <span className="font-medium capitalize text-slate-900 dark:text-white">{i.tipo}</span>
-              <span className="text-slate-500">
+              <span className="text-slate-900">
                 {i.fecha} · ${i.importe.toFixed(2)}
               </span>
             </li>
           ))}
           {(!(evento as any).ingresos || (evento as any).ingresos.length === 0) && (
-            <li className="py-4 text-center text-sm text-slate-400">
+            <li className="py-4 text-center text-sm text-slate-900">
               Sin ingresos registrados todavía.{" "}
               <a href={`/ingresos?evento=${evento.id}`} className="text-slate-700 underline dark:text-slate-300">
                 Registrar ingreso
@@ -117,7 +117,7 @@ function Dato({
       : "text-slate-900 dark:text-white";
   return (
     <div>
-      <p className="text-xs text-slate-500">{label}</p>
+      <p className="text-xs text-slate-900">{label}</p>
       <p className={`text-lg font-semibold ${color}`}>{valor}</p>
     </div>
   );

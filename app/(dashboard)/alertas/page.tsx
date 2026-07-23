@@ -32,7 +32,7 @@ export default async function AlertasPage({
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Alertas</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-900">
           {alertas?.length ?? 0} alertas activas · {eventosConSaldoPendiente?.length ?? 0} eventos con saldo pendiente próximos
         </p>
       </div>
@@ -96,7 +96,7 @@ export default async function AlertasPage({
           <AlertaCard key={a.id} alerta={a} />
         ))}
         {(!alertas || alertas.length === 0) && (
-          <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-400 dark:border-slate-800 dark:bg-slate-900">
+          <div className="rounded-xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-900 dark:border-slate-800 dark:bg-slate-900">
             No hay alertas activas. Todo en orden. 👍
           </div>
         )}

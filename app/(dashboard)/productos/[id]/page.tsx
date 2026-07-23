@@ -35,7 +35,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
     <div className="max-w-3xl space-y-8">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{producto.nombre}</h1>
-        <p className="font-mono text-sm text-slate-500">{producto.codigo_interno}</p>
+        <p className="font-mono text-sm text-slate-900">{producto.codigo_interno}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -79,7 +79,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
         <ul className="divide-y divide-slate-100 dark:divide-slate-800">
           {historialPreciosList.map((h) => (
             <li key={h.id} className="flex items-center justify-between py-2 text-sm">
-              <span className="text-slate-500">{new Date(h.fecha).toLocaleDateString("es-AR")}</span>
+              <span className="text-slate-900">{new Date(h.fecha).toLocaleDateString("es-AR")}</span>
               <span>
                 ${h.precio_anterior.toFixed(2)} → ${h.precio_nuevo.toFixed(2)}
               </span>
@@ -90,7 +90,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
             </li>
           ))}
           {historialPreciosList.length === 0 && (
-            <li className="py-4 text-center text-sm text-slate-400">Sin cambios de precio registrados.</li>
+            <li className="py-4 text-center text-sm text-slate-900">Sin cambios de precio registrados.</li>
           )}
         </ul>
       </div>
@@ -103,7 +103,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
         <ul className="divide-y divide-slate-100 dark:divide-slate-800">
           {historialMovimientosList.map((m) => (
             <li key={m.id} className="flex items-center justify-between py-2 text-sm">
-              <span className="text-slate-500">{new Date(m.created_at).toLocaleString("es-AR")}</span>
+              <span className="text-slate-900">{new Date(m.created_at).toLocaleString("es-AR")}</span>
               <span className="text-slate-600 dark:text-slate-300">{ETIQUETA_MOVIMIENTO[m.tipo] ?? m.tipo}</span>
               <span className={m.cantidad >= 0 ? "text-green-600" : "text-red-600"}>
                 {m.cantidad >= 0 ? "+" : ""}
@@ -112,7 +112,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
             </li>
           ))}
           {historialMovimientosList.length === 0 && (
-            <li className="py-4 text-center text-sm text-slate-400">Sin movimientos registrados.</li>
+            <li className="py-4 text-center text-sm text-slate-900">Sin movimientos registrados.</li>
           )}
         </ul>
       </div>
@@ -123,7 +123,7 @@ export default async function DetalleProductoPage({ params }: { params: { id: st
 function Dato({ label, valor, destacado }: { label: string; valor: string; destacado?: "negativo" }) {
   return (
     <div>
-      <p className="text-xs text-slate-500">{label}</p>
+      <p className="text-xs text-slate-900">{label}</p>
       <p className={`text-lg font-semibold ${destacado === "negativo" ? "text-red-600" : "text-slate-900 dark:text-white"}`}>
         {valor}
       </p>

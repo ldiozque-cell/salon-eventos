@@ -165,7 +165,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
                 placeholder="Precio unit."
                 className="w-32 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
               />
-              <span className="w-24 text-right text-sm text-slate-500">
+              <span className="w-24 text-right text-sm text-slate-900">
                 ${(item.cantidad * item.precio_unitario).toFixed(2)}
               </span>
               <button
@@ -232,7 +232,7 @@ export function CompraForm({ proveedores, productos }: { proveedores: Proveedor[
       </div>
 
       <div className="flex items-center justify-between border-t border-slate-200 pt-4 dark:border-slate-800">
-        <div className="text-sm text-slate-500">
+        <div className="text-sm text-slate-900">
           Subtotal: <span className="font-semibold text-slate-900 dark:text-white">${subtotal.toFixed(2)}</span>
         </div>
         <button

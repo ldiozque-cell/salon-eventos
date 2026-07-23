@@ -50,7 +50,7 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Dashboard</h1>
-        <p className="text-sm text-slate-500">Resumen del mes en curso</p>
+        <p className="text-sm text-slate-900">Resumen del mes en curso</p>
       </div>
 
       {/* KPIs principales */}
@@ -103,7 +103,7 @@ export default async function DashboardPage() {
       <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Próximas compras sugeridas</h2>
-          <Link href="/compras/nueva" className="text-xs font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white">
+          <Link href="/compras/nueva" className="text-xs font-medium text-slate-900 hover:text-slate-900 dark:hover:text-white">
             Registrar compra →
           </Link>
         </div>
@@ -112,7 +112,7 @@ export default async function DashboardPage() {
             {comprasSugeridas.map((p) => (
               <li key={p.producto_id} className="flex items-center justify-between py-2 text-sm">
                 <span className="font-medium text-slate-900 dark:text-white">{p.nombre}</span>
-                <span className="text-slate-500">
+                <span className="text-slate-900">
                   Stock: {p.stock_actual} / mín. {p.stock_minimo} · sugerido:{" "}
                   <span className="font-semibold text-amber-600">{p.cantidad_sugerida}</span>
                 </span>
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
             ))}
           </ul>
         ) : (
-          <p className="text-sm text-slate-400">No hay productos por debajo del stock mínimo. 👍</p>
+          <p className="text-sm text-slate-900">No hay productos por debajo del stock mínimo. 👍</p>
         )}
       </div>
 
@@ -129,7 +129,7 @@ export default async function DashboardPage() {
         <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Últimos movimientos</h2>
-            <Link href="/inventario/movimientos" className="text-xs font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white">
+            <Link href="/inventario/movimientos" className="text-xs font-medium text-slate-900 hover:text-slate-900 dark:hover:text-white">
               Ver todos →
             </Link>
           </div>
@@ -147,7 +147,7 @@ export default async function DashboardPage() {
               </li>
             ))}
             {(!ultimosMovimientos || ultimosMovimientos.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Sin movimientos todavía.</li>
+              <li className="py-4 text-center text-sm text-slate-900">Sin movimientos todavía.</li>
             )}
           </ul>
         </div>
@@ -156,7 +156,7 @@ export default async function DashboardPage() {
         <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Compras recientes</h2>
-            <Link href="/compras" className="text-xs font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white">
+            <Link href="/compras" className="text-xs font-medium text-slate-900 hover:text-slate-900 dark:hover:text-white">
               Ver todas →
             </Link>
           </div>
@@ -171,7 +171,7 @@ export default async function DashboardPage() {
               </li>
             ))}
             {(!comprasRecientes || comprasRecientes.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Sin compras todavía.</li>
+              <li className="py-4 text-center text-sm text-slate-900">Sin compras todavía.</li>
             )}
           </ul>
         </div>
@@ -185,13 +185,13 @@ export default async function DashboardPage() {
             {productosMasUtilizados?.map((p) => (
               <li key={p.producto_id} className="flex items-center justify-between py-2 text-sm">
                 <span className="font-medium text-slate-900 dark:text-white">{p.nombre}</span>
-                <span className="text-slate-500">
+                <span className="text-slate-900">
                   {p.cantidad_total_consumida} unid. · {p.cantidad_eventos} eventos
                 </span>
               </li>
             ))}
             {(!productosMasUtilizados || productosMasUtilizados.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Todavía no hay consumo registrado.</li>
+              <li className="py-4 text-center text-sm text-slate-900">Todavía no hay consumo registrado.</li>
             )}
           </ul>
         </div>
@@ -205,13 +205,13 @@ export default async function DashboardPage() {
             {proveedoresMayorVolumen?.map((p) => (
               <li key={p.proveedor_id} className="flex items-center justify-between py-2 text-sm">
                 <span className="font-medium text-slate-900 dark:text-white">{p.nombre}</span>
-                <span className="text-slate-500">
+                <span className="text-slate-900">
                   {formatoMoneda(p.total_comprado)} · {p.cantidad_compras} compras
                 </span>
               </li>
             ))}
             {(!proveedoresMayorVolumen || proveedoresMayorVolumen.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Todavía no hay compras registradas.</li>
+              <li className="py-4 text-center text-sm text-slate-900">Todavía no hay compras registradas.</li>
             )}
           </ul>
         </div>

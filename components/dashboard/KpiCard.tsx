@@ -15,7 +15,7 @@ const TONOS: Record<NonNullable<KpiCardProps["tono"]>, string> = {
 export function KpiCard({ label, valor, variacion, tono = "neutral" }: KpiCardProps) {
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-      <p className="text-sm text-slate-500">{label}</p>
+      <p className="text-sm text-slate-900">{label}</p>
       <p className={`mt-1 text-3xl font-semibold ${TONOS[tono]}`}>{valor}</p>
       {variacion && (
         <p className={`mt-1 text-xs ${variacion.positiva ? "text-green-600" : "text-red-600"}`}>

@@ -26,7 +26,7 @@ export default async function EstadisticasPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Estadísticas inteligentes</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-900">
           Cálculos automáticos sobre consumo, precios, proveedores y proyecciones
         </p>
       </div>
@@ -46,19 +46,19 @@ export default async function EstadisticasPage() {
         />
       </div>
 
-      <p className="-mt-4 text-xs text-slate-400">
+      <p className="-mt-4 text-xs text-slate-900">
         Promedio histórico de compras mensuales (referencia): {formatoMoneda(proyeccionCompras?.promedio_compras_mensual ?? 0)}
       </p>
 
       {/* Pronóstico de reposición */}
       <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
         <h2 className="mb-1 text-sm font-semibold text-slate-700 dark:text-slate-300">Pronóstico de reposición</h2>
-        <p className="mb-4 text-xs text-slate-400">
+        <p className="mb-4 text-xs text-slate-900">
           Basado en cada cuánto se compró históricamente cada producto (mínimo 2 compras registradas)
         </p>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="text-left text-slate-500">
+            <thead className="text-left text-slate-900">
               <tr>
                 <th className="pb-2">Producto</th>
                 <th className="pb-2">Frecuencia promedio</th>
@@ -76,8 +76,8 @@ export default async function EstadisticasPage() {
                         {p.nombre}
                       </Link>
                     </td>
-                    <td className="py-2 text-slate-500">cada {p.promedio_dias_entre_compras} días</td>
-                    <td className="py-2 text-slate-500">{p.ultima_compra}</td>
+                    <td className="py-2 text-slate-900">cada {p.promedio_dias_entre_compras} días</td>
+                    <td className="py-2 text-slate-900">{p.ultima_compra}</td>
                     <td className={`py-2 font-medium ${vencida ? "text-amber-600" : "text-slate-700 dark:text-slate-300"}`}>
                       {p.proxima_compra_estimada} {vencida && "· ya debería reponerse"}
                     </td>
@@ -86,7 +86,7 @@ export default async function EstadisticasPage() {
               })}
               {(!pronosticoReposicion || pronosticoReposicion.length === 0) && (
                 <tr>
-                  <td colSpan={4} className="py-6 text-center text-slate-400">
+                  <td colSpan={4} className="py-6 text-center text-slate-900">
                     Todavía no hay suficiente historial de compras para proyectar (se necesitan al menos 2 compras por producto).
                   </td>
                 </tr>
@@ -108,7 +108,7 @@ export default async function EstadisticasPage() {
               </li>
             ))}
             {(!productosMayorAumento || productosMayorAumento.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Sin aumentos de precio registrados.</li>
+              <li className="py-4 text-center text-sm text-slate-900">Sin aumentos de precio registrados.</li>
             )}
           </ul>
         </div>
@@ -120,11 +120,11 @@ export default async function EstadisticasPage() {
             {productosMenosUtilizados?.map((p) => (
               <li key={p.producto_id} className="flex items-center justify-between py-2 text-sm">
                 <span className="font-medium text-slate-900 dark:text-white">{p.nombre}</span>
-                <span className="text-slate-500">{p.cantidad_total_consumida} unid. consumidas (histórico)</span>
+                <span className="text-slate-900">{p.cantidad_total_consumida} unid. consumidas (histórico)</span>
               </li>
             ))}
             {(!productosMenosUtilizados || productosMenosUtilizados.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Sin datos de consumo todavía.</li>
+              <li className="py-4 text-center text-sm text-slate-900">Sin datos de consumo todavía.</li>
             )}
           </ul>
         </div>
@@ -140,11 +140,11 @@ export default async function EstadisticasPage() {
                 <Link href={`/productos/${p.producto_id}`} className="font-medium text-slate-900 hover:underline dark:text-white">
                   {p.nombre}
                 </Link>
-                <span className="text-slate-500">stock: {p.stock_actual}</span>
+                <span className="text-slate-900">stock: {p.stock_actual}</span>
               </li>
             ))}
             {(!productosSinMovimiento || productosSinMovimiento.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Todos los productos tuvieron movimiento. 👍</li>
+              <li className="py-4 text-center text-sm text-slate-900">Todos los productos tuvieron movimiento. 👍</li>
             )}
           </ul>
         </div>
@@ -152,18 +152,18 @@ export default async function EstadisticasPage() {
         {/* Capital inmovilizado */}
         <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
           <h2 className="mb-1 text-sm font-semibold text-slate-700 dark:text-slate-300">Capital inmovilizado</h2>
-          <p className="mb-4 text-xs text-slate-400">Stock sin consumo hace más de 90 días</p>
+          <p className="mb-4 text-xs text-slate-900">Stock sin consumo hace más de 90 días</p>
           <ul className="divide-y divide-slate-100 dark:divide-slate-800">
             {capitalInmovilizado?.map((p) => (
               <li key={p.producto_id} className="flex items-center justify-between py-2 text-sm">
                 <Link href={`/productos/${p.producto_id}`} className="font-medium text-slate-900 hover:underline dark:text-white">
                   {p.nombre}
                 </Link>
-                <span className="text-slate-500">{formatoMoneda(p.valor_inmovilizado)}</span>
+                <span className="text-slate-900">{formatoMoneda(p.valor_inmovilizado)}</span>
               </li>
             ))}
             {(!capitalInmovilizado || capitalInmovilizado.length === 0) && (
-              <li className="py-4 text-center text-sm text-slate-400">Sin capital inmovilizado relevante. 👍</li>
+              <li className="py-4 text-center text-sm text-slate-900">Sin capital inmovilizado relevante. 👍</li>
             )}
           </ul>
         </div>

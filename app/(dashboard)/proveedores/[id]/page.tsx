@@ -17,7 +17,7 @@ export default async function FichaProveedorPage({ params }: { params: { id: str
     <div className="max-w-3xl space-y-8">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{proveedor.nombre}</h1>
-        <p className="text-sm text-slate-500">{proveedor.empresa ?? "Sin empresa registrada"}</p>
+        <p className="text-sm text-slate-900">{proveedor.empresa ?? "Sin empresa registrada"}</p>
       </div>
 
       {/* Métricas agregadas */}
@@ -59,13 +59,13 @@ export default async function FichaProveedorPage({ params }: { params: { id: str
               <Link href={`/productos/${p.id}`} className="font-medium text-slate-900 hover:underline dark:text-white">
                 {p.nombre}
               </Link>
-              <span className="text-slate-500">
+              <span className="text-slate-900">
                 ${p.precio_actual.toFixed(2)} · stock: {p.stock_actual}
               </span>
             </li>
           ))}
           {(!productos || productos.length === 0) && (
-            <li className="py-4 text-center text-sm text-slate-400">Sin productos asociados como proveedor principal.</li>
+            <li className="py-4 text-center text-sm text-slate-900">Sin productos asociados como proveedor principal.</li>
           )}
         </ul>
       </div>
@@ -76,14 +76,14 @@ export default async function FichaProveedorPage({ params }: { params: { id: str
         <ul className="divide-y divide-slate-100 dark:divide-slate-800">
           {historial?.map((c) => (
             <li key={c.id} className="flex items-center justify-between py-2 text-sm">
-              <Link href={`/compras/${c.id}`} className="text-slate-500 hover:underline">
+              <Link href={`/compras/${c.id}`} className="text-slate-900 hover:underline">
                 {c.fecha} {c.numero_factura ? `· Fact. ${c.numero_factura}` : ""}
               </Link>
               <span className="font-medium text-slate-900 dark:text-white">${c.total.toFixed(2)}</span>
             </li>
           ))}
           {(!historial || historial.length === 0) && (
-            <li className="py-4 text-center text-sm text-slate-400">Sin compras registradas todavía.</li>
+            <li className="py-4 text-center text-sm text-slate-900">Sin compras registradas todavía.</li>
           )}
         </ul>
       </div>
@@ -94,7 +94,7 @@ export default async function FichaProveedorPage({ params }: { params: { id: str
 function Dato({ label, valor }: { label: string; valor: string }) {
   return (
     <div>
-      <p className="text-xs text-slate-500">{label}</p>
+      <p className="text-xs text-slate-900">{label}</p>
       <p className="text-lg font-semibold text-slate-900 dark:text-white">{valor}</p>
     </div>
   );

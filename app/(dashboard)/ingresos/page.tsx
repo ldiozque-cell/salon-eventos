@@ -37,7 +37,7 @@ export default async function IngresosPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Ingresos</h1>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-900">
             {count} registros · ${totalListado.toFixed(2)} en esta vista
           </p>
         </div>
@@ -65,7 +65,7 @@ export default async function IngresosPage({
 
       <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500 dark:bg-slate-900">
+          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
             <tr>
               <th className="px-4 py-3">Fecha</th>
               <th className="px-4 py-3">Tipo</th>
@@ -76,13 +76,13 @@ export default async function IngresosPage({
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {ingresos?.map((i: any) => (
               <tr key={i.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                <td className="px-4 py-3 whitespace-nowrap text-slate-500">{i.fecha}</td>
+                <td className="px-4 py-3 whitespace-nowrap text-slate-900">{i.fecha}</td>
                 <td className="px-4 py-3">
                   <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                     {ETIQUETA_TIPO[i.tipo] ?? i.tipo}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-slate-500">{i.eventos?.cliente_nombre ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-900">{i.eventos?.cliente_nombre ?? "—"}</td>
                 <td className={`px-4 py-3 font-medium ${i.importe >= 0 ? "text-green-600" : "text-red-600"}`}>
                   ${i.importe.toFixed(2)}
                 </td>
@@ -90,7 +90,7 @@ export default async function IngresosPage({
             ))}
             {ingresos?.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={4} className="px-4 py-8 text-center text-slate-900">
                   No hay ingresos con ese filtro.
                 </td>
               </tr>

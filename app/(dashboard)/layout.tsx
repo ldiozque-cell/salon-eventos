@@ -52,7 +52,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+              className="flex items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-slate-900 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
             >
               <span>{item.label}</span>
               {item.href === "/alertas" && cantidadAlertasNoLeidas > 0 && (
@@ -77,7 +77,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
               <div className="font-medium text-slate-900 dark:text-white">
                 {nombrePerfil}
               </div>
-              <div className="text-xs capitalize text-slate-500">{rolPerfil}</div>
+              <div className="text-xs capitalize text-slate-900">{rolPerfil}</div>
             </div>
             <form action={logoutAction}>
               <button

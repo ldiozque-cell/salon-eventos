@@ -38,7 +38,7 @@ export default async function EventosPage({
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Eventos</h1>
-          <p className="text-sm text-slate-500">{count} eventos registrados</p>
+          <p className="text-sm text-slate-900">{count} eventos registrados</p>
         </div>
         <Link
           href="/eventos/nuevo"
@@ -65,7 +65,7 @@ export default async function EventosPage({
 
       <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500 dark:bg-slate-900">
+          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
             <tr>
               <th className="px-4 py-3">Fecha</th>
               <th className="px-4 py-3">Cliente</th>
@@ -79,12 +79,12 @@ export default async function EventosPage({
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {eventos?.map((e) => (
               <tr key={e.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                <td className="px-4 py-3 whitespace-nowrap text-slate-500">
+                <td className="px-4 py-3 whitespace-nowrap text-slate-900">
                   {e.fecha} {e.hora.slice(0, 5)}
                 </td>
                 <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{e.cliente_nombre}</td>
-                <td className="px-4 py-3 text-slate-500">{e.tematica ?? "—"}</td>
-                <td className="px-4 py-3 text-slate-500">
+                <td className="px-4 py-3 text-slate-900">{e.tematica ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-900">
                   {e.cantidad_ninos} / {e.cantidad_adultos}
                 </td>
                 <td className="px-4 py-3">${e.total_cobrado.toFixed(2)}</td>
@@ -94,7 +94,7 @@ export default async function EventosPage({
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right">
-                  <Link href={`/eventos/${e.id}`} className="text-slate-500 hover:text-slate-900 dark:hover:text-white">
+                  <Link href={`/eventos/${e.id}`} className="text-slate-900 hover:text-slate-900 dark:hover:text-white">
                     Ver
                   </Link>
                 </td>
@@ -102,7 +102,7 @@ export default async function EventosPage({
             ))}
             {eventos?.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-8 text-center text-slate-900">
                   No hay eventos con ese filtro.
                 </td>
               </tr>

@@ -23,7 +23,7 @@ export default async function ProveedoresPage({
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Proveedores</h1>
-          <p className="text-sm text-slate-500">{count} proveedores activos</p>
+          <p className="text-sm text-slate-900">{count} proveedores activos</p>
         </div>
         <Link
           href="/proveedores/nuevo"
@@ -45,7 +45,7 @@ export default async function ProveedoresPage({
 
       <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500 dark:bg-slate-900">
+          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
             <tr>
               <th className="px-4 py-3">Nombre</th>
               <th className="px-4 py-3">Empresa</th>
@@ -58,11 +58,11 @@ export default async function ProveedoresPage({
             {proveedores?.map((p) => (
               <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
                 <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{p.nombre}</td>
-                <td className="px-4 py-3 text-slate-500">{p.empresa ?? "—"}</td>
-                <td className="px-4 py-3 text-slate-500">{p.whatsapp ?? p.telefono ?? "—"}</td>
-                <td className="px-4 py-3 text-slate-500">{p.ciudad ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-900">{p.empresa ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-900">{p.whatsapp ?? p.telefono ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-900">{p.ciudad ?? "—"}</td>
                 <td className="px-4 py-3 text-right">
-                  <Link href={`/proveedores/${p.id}`} className="text-slate-500 hover:text-slate-900 dark:hover:text-white">
+                  <Link href={`/proveedores/${p.id}`} className="text-slate-900 hover:text-slate-900 dark:hover:text-white">
                     Ver ficha
                   </Link>
                 </td>
@@ -70,7 +70,7 @@ export default async function ProveedoresPage({
             ))}
             {proveedores?.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={5} className="px-4 py-8 text-center text-slate-900">
                   No se encontraron proveedores.
                 </td>
               </tr>

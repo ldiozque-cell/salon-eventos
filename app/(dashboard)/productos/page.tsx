@@ -24,7 +24,7 @@ export default async function ProductosPage({
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Productos</h1>
-          <p className="text-sm text-slate-500">{count} productos registrados</p>
+          <p className="text-sm text-slate-900">{count} productos registrados</p>
         </div>
         <Link
           href="/productos/nuevo"
@@ -62,7 +62,7 @@ export default async function ProductosPage({
 
       <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500 dark:bg-slate-900">
+          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
             <tr>
               <th className="px-4 py-3">Código</th>
               <th className="px-4 py-3">Nombre</th>
@@ -78,26 +78,26 @@ export default async function ProductosPage({
               const stockBajo = p.stock_actual <= p.stock_minimo;
               return (
                 <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                  <td className="px-4 py-3 font-mono text-xs text-slate-500">{p.codigo_interno}</td>
+                  <td className="px-4 py-3 font-mono text-xs text-slate-900">{p.codigo_interno}</td>
                   <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{p.nombre}</td>
                   <td className="px-4 py-3">${p.precio_actual.toFixed(2)}</td>
                   <td className={`px-4 py-3 ${stockBajo ? "font-semibold text-red-600" : ""}`}>
                     {p.stock_actual} {stockBajo && "⚠"}
                   </td>
-                  <td className="px-4 py-3 text-slate-500">{p.stock_minimo}</td>
+                  <td className="px-4 py-3 text-slate-900">{p.stock_minimo}</td>
                   <td className="px-4 py-3">
                     <span
                       className={`rounded-full px-2 py-0.5 text-xs ${
                         p.estado === "activo"
                           ? "bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400"
-                          : "bg-slate-100 text-slate-500 dark:bg-slate-800"
+                           : "bg-slate-100 text-slate-900 dark:bg-slate-800"
                       }`}
                     >
                       {p.estado}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <Link href={`/productos/${p.id}`} className="text-slate-500 hover:text-slate-900 dark:hover:text-white">
+                    <Link href={`/productos/${p.id}`} className="text-slate-900 hover:text-slate-900 dark:hover:text-white">
                       Ver
                     </Link>
                   </td>
@@ -106,7 +106,7 @@ export default async function ProductosPage({
             })}
             {productos?.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-8 text-center text-slate-900">
                   No se encontraron productos con esos filtros.
                 </td>
               </tr>

@@ -24,23 +24,23 @@ export default async function BalancePage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Balance</h1>
-        <p className="text-sm text-slate-500">Comparación mensual y anual de ingresos, gastos y rentabilidad</p>
+        <p className="text-sm text-slate-900">Comparación mensual y anual de ingresos, gastos y rentabilidad</p>
       </div>
 
       {/* Comparación mes actual vs anterior */}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <p className="text-sm text-slate-500">Ingresos del mes</p>
+          <p className="text-sm text-slate-900">Ingresos del mes</p>
           <p className="mt-1 text-2xl font-semibold text-green-600">{formatoMoneda(c?.ingresos_actual ?? 0)}</p>
           {c && <VariacionBadge pct={c.variacion_ingresos_pct} />}
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <p className="text-sm text-slate-500">Gastos del mes</p>
+          <p className="text-sm text-slate-900">Gastos del mes</p>
           <p className="mt-1 text-2xl font-semibold text-red-600">{formatoMoneda(c?.gastos_actual ?? 0)}</p>
           {c && <VariacionBadge pct={c.variacion_gastos_pct} />}
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
-          <p className="text-sm text-slate-500">Ganancia neta del mes</p>
+          <p className="text-sm text-slate-900">Ganancia neta del mes</p>
           <p
             className={`mt-1 text-2xl font-semibold ${
               (c?.ganancia_actual ?? 0) >= 0 ? "text-slate-900 dark:text-white" : "text-red-600"
@@ -65,7 +65,7 @@ export default async function BalancePage() {
         <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300">Comparación anual</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="text-left text-slate-500">
+            <thead className="text-left text-slate-900">
               <tr>
                 <th className="py-2 pr-4">Año</th>
                 <th className="py-2 pr-4">Ingresos</th>
@@ -85,12 +85,12 @@ export default async function BalancePage() {
                     <td className={`py-2 pr-4 font-medium ${b.ganancia >= 0 ? "" : "text-red-600"}`}>
                       {formatoMoneda(b.ganancia)}
                     </td>
-                    <td className="py-2 text-slate-500">{b.margen_porcentual.toFixed(1)}%</td>
+                    <td className="py-2 text-slate-900">{b.margen_porcentual.toFixed(1)}%</td>
                   </tr>
                 ))}
               {(!balanceAnual || balanceAnual.filter((b) => b.ingresos > 0 || b.gastos > 0).length === 0) && (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-slate-400">
+                  <td colSpan={5} className="py-8 text-center text-slate-900">
                     Todavía no hay suficiente historial para comparar años.
                   </td>
                 </tr>

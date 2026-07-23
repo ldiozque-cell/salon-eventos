@@ -41,7 +41,7 @@ export default async function MovimientosInventarioPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Movimientos de inventario</h1>
-          <p className="text-sm text-slate-500">{count} movimientos registrados</p>
+          <p className="text-sm text-slate-900">{count} movimientos registrados</p>
         </div>
       </div>
 
@@ -67,7 +67,7 @@ export default async function MovimientosInventarioPage({
 
       <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-slate-500 dark:bg-slate-900">
+          <thead className="bg-slate-50 text-left text-slate-900 dark:bg-slate-900">
             <tr>
               <th className="px-4 py-3">Fecha</th>
               <th className="px-4 py-3">Producto</th>
@@ -81,7 +81,7 @@ export default async function MovimientosInventarioPage({
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {movimientos?.map((m: any) => (
               <tr key={m.id} className="hover:bg-slate-50 dark:hover:bg-slate-900">
-                <td className="px-4 py-3 whitespace-nowrap text-slate-500">
+                <td className="px-4 py-3 whitespace-nowrap text-slate-900">
                   {new Date(m.created_at).toLocaleString("es-AR")}
                 </td>
                 <td className="px-4 py-3 font-medium text-slate-900 dark:text-white">{m.productos?.nombre}</td>
@@ -94,14 +94,14 @@ export default async function MovimientosInventarioPage({
                   {m.cantidad >= 0 ? "+" : ""}
                   {m.cantidad}
                 </td>
-                <td className="px-4 py-3 text-slate-500">{m.stock_resultante}</td>
-                <td className="px-4 py-3 text-slate-500">{m.perfiles?.nombre_completo ?? "—"}</td>
-                <td className="px-4 py-3 text-slate-500">{m.motivo ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-900">{m.stock_resultante}</td>
+                <td className="px-4 py-3 text-slate-900">{m.perfiles?.nombre_completo ?? "—"}</td>
+                <td className="px-4 py-3 text-slate-900">{m.motivo ?? "—"}</td>
               </tr>
             ))}
             {movimientos?.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-slate-400">
+                <td colSpan={7} className="px-4 py-8 text-center text-slate-900">
                   No hay movimientos con ese filtro.
                 </td>
               </tr>

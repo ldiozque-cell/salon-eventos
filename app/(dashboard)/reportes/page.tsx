@@ -12,7 +12,7 @@ export default async function ReportesPage() {
     <div>
       <div className="mb-6">
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Reportes</h1>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-900">
           Elegí el tipo de reporte y el formato. Los reportes con fecha muestran el período seleccionado; el resto
           muestra el estado actual.
         </p>
