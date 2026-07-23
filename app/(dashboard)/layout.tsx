@@ -70,7 +70,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <input
             type="search"
             placeholder="Buscar productos, proveedores, eventos..."
-            className="w-80 max-w-full rounded-lg border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-slate-500 dark:border-slate-700 dark:bg-slate-800"
+            className="w-80 max-w-full rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-900 outline-none focus:border-slate-500 dark:border-slate-700"
           />
           <div className="flex items-center gap-3">
             <div className="text-right text-sm">

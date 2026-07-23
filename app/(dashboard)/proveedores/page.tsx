@@ -39,7 +39,7 @@ export default async function ProveedoresPage({
           name="q"
           defaultValue={searchParams.q}
           placeholder="Buscar por nombre o empresa..."
-          className="w-80 rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"
+          className="w-80 rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 dark:border-slate-700"
         />
       </form>
 
